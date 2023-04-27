@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CapstoneTest</string>
+    <string name="main_title">Let\'s find out\nyour love type!</string>
+    <string name="question">There were favorite flowers\nin the flower base.\nAs time goes, the flowers\nhave all withered.\nWhat are you going to do with that?</string>
+
+    <!-- Bottom Navigation View -->
+    <string name="home">Home</string>
+    <string name="my_travel">My Travel</string>
+    <string name="community">Community</string>
+    <string name="account">Account</string>
+
+    <string name="drawer_opened">Opened Drawer</string>
+    <string name="drawer_closed">Closed Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
