@@ -7,14 +7,14 @@ data class TravelData (
     var sDate: String = "",
     var eDate: String = "",
     var diffDay: Int = 0,
-    var travelWhom: String,
-    var travelStyle: MutableList<String>,
+    var travelWhom: ArrayList<String>,
+    var travelStyle: ArrayList<String>,
     var flags: Int = 0,
     /*var schedule: MutableMap<String, Any> = HashMap()*/
 
     //val img : Int
 ){
-    constructor(): this("","","", "", "", 0, "", mutableListOf(),0)
+    constructor(): this("","","", "", "", 0, arrayListOf(), arrayListOf(),0)
 
     /*fun toMap(): Map<String, Any?> {
         return mapOf(

@@ -29,6 +29,9 @@
             android:value="AIzaSyC4AeZz7W9cy3TYdTV3HLIHRymyE7Y3_4c" />
 
         <activity
+            android:name=".myTravel.AddTravelStyle"
+            android:exported="false" />
+        <activity
             android:name=".mySchedule.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />

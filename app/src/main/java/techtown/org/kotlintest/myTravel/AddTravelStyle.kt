@@ -20,8 +20,6 @@ class AddTravelStyle : AppCompatActivity() {
     lateinit var eDate: String
     var diffDay: Int = 0
 
-    lateinit var sTravelWhom: String
-
     lateinit var dao: TravelDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,105 +46,80 @@ class AddTravelStyle : AppCompatActivity() {
             sDate = intent.getStringExtra("sDate")!!
             eDate = intent.getStringExtra("eDate")!!
             diffDay = intent.getIntExtra("diffDay", 0)!!
-
-            sTravelWhom = ""
         }
 
-        var sTravelStyle = mutableListOf<String>()
+        var sTravelWhom = arrayListOf<String>()
+        var sTravelStyle = arrayListOf<String>()
 
         binding.selectAlone.setOnClickListener {
-            sTravelWhom = binding.selectAlone.text.toString()
+            var whom = binding.selectAlone.text.toString()
             binding.selectAlone.isSelected = !binding.selectAlone.isSelected
 
             if (binding.selectAlone.isSelected){
-                binding.selectFriend.isSelected = false
-                binding.selectCouple.isSelected = false
-                binding.selectKids.isSelected = false
-                binding.selectParents.isSelected = false
-                binding.selectEtc.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
+            }
+            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+
             }
 
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
-        }
-
         binding.selectFriend.setOnClickListener {
-            sTravelWhom = binding.selectFriend.text.toString()
+            var whom = binding.selectFriend.text.toString()
             binding.selectFriend.isSelected = !binding.selectFriend.isSelected
 
             if (binding.selectFriend.isSelected){
-                binding.selectAlone.isSelected = false
-                binding.selectCouple.isSelected = false
-                binding.selectKids.isSelected = false
-                binding.selectParents.isSelected = false
-                binding.selectEtc.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
             }
             Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
         }
 
         binding.selectCouple.setOnClickListener {
-            sTravelWhom = binding.selectCouple.text.toString()
+            var whom = binding.selectCouple.text.toString()
             binding.selectCouple.isSelected = !binding.selectCouple.isSelected
 
             if (binding.selectCouple.isSelected){
-                binding.selectAlone.isSelected = false
-                binding.selectFriend.isSelected = false
-                binding.selectKids.isSelected = false
-                binding.selectParents.isSelected = false
-                binding.selectEtc.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
             }
             Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
         }
 
         binding.selectKids.setOnClickListener {
-            sTravelWhom = binding.selectKids.text.toString()
+            var whom = binding.selectKids.text.toString()
             binding.selectKids.isSelected = !binding.selectKids.isSelected
 
             if (binding.selectKids.isSelected){
-                binding.selectAlone.isSelected = false
-                binding.selectFriend.isSelected = false
-                binding.selectCouple.isSelected = false
-                binding.selectParents.isSelected = false
-                binding.selectEtc.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
             }
             Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
         }
 
         binding.selectParents.setOnClickListener {
-            sTravelWhom = binding.selectParents.text.toString()
+            var whom = binding.selectParents.text.toString()
             binding.selectParents.isSelected = !binding.selectParents.isSelected
 
             if (binding.selectParents.isSelected){
-                binding.selectAlone.isSelected = false
-                binding.selectFriend.isSelected = false
-                binding.selectCouple.isSelected = false
-                binding.selectKids.isSelected = false
-                binding.selectEtc.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
             }
             Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
         }
 
         binding.selectEtc.setOnClickListener {
-            sTravelWhom = binding.selectEtc.text.toString()
+            var whom = binding.selectEtc.text.toString()
             binding.selectEtc.isSelected = !binding.selectEtc.isSelected
 
             if (binding.selectEtc.isSelected){
-                binding.selectAlone.isSelected = false
-                binding.selectFriend.isSelected = false
-                binding.selectCouple.isSelected = false
-                binding.selectKids.isSelected = false
-                binding.selectParents.isSelected = false
+                sTravelWhom.add(whom)
             } else {
-                sTravelWhom = ""
+                sTravelWhom.remove(whom)
             }
             Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
         }

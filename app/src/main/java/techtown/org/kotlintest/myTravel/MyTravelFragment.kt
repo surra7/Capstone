@@ -98,18 +98,18 @@ class MyTravelFragment: Fragment(){
                 datas2.clear()
 
                 datas.apply {
-                    add(TravelData("", name = "Osaka|Tokyo", "place", sDate = "2023.06.24", eDate = "2023.06.28", 0, "", mutableListOf(), 0))
-                    add(TravelData("", name = "Otaru", "place", sDate = "2023.07.14", eDate = "2023.07.17", 0, "", mutableListOf(),0))
+                    add(TravelData("", name = "Osaka|Tokyo", "place", sDate = "2023.06.24", eDate = "2023.06.28", 0, arrayListOf(), arrayListOf(), 0))
+                    add(TravelData("", name = "Otaru", "place", sDate = "2023.07.14", eDate = "2023.07.17", 0, arrayListOf(), arrayListOf(),0))
                     datas.sortByDescending { it.sDate }
                     myAdapter.datas = datas
                     myAdapter.notifyDataSetChanged()
                 }
 
                 datas2.apply {
-                    add(TravelData("", name = "Nha Trang", "place", sDate = "2022.12.26", eDate = "2023.12.30", 0, "", mutableListOf(),0))
-                    add(TravelData("", name = "Fukuoka", "place", sDate = "2022.10.05", eDate = "2022.10.08", 0, "", mutableListOf(),0))
-                    add(TravelData("", name = "Bangkok", "place", sDate = "2022.06.21", eDate = "2022.06.25", 0, "", mutableListOf(),0))
-                    add(TravelData("", name = "Tokyo", "place", sDate = "2022.01.05", eDate = "2022.01.10", 0, "", mutableListOf(),0))
+                    add(TravelData("", name = "Nha Trang", "place", sDate = "2022.12.26", eDate = "2023.12.30", 0, arrayListOf(), arrayListOf(),0))
+                    add(TravelData("", name = "Fukuoka", "place", sDate = "2022.10.05", eDate = "2022.10.08", 0, arrayListOf(), arrayListOf(),0))
+                    add(TravelData("", name = "Bangkok", "place", sDate = "2022.06.21", eDate = "2022.06.25", 0, arrayListOf(), arrayListOf(),0))
+                    add(TravelData("", name = "Tokyo", "place", sDate = "2022.01.05", eDate = "2022.01.10", 0, arrayListOf(), arrayListOf(),0))
                     datas2.sortByDescending { it.sDate }
                     myAdapter2.datas = datas2
                     myAdapter2.notifyDataSetChanged()
