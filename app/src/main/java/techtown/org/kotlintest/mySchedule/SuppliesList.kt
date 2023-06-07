@@ -36,6 +36,9 @@ class SuppliesList : AppCompatActivity()
     lateinit var eDate: String
     var diffDay: Int = 0
 
+    var sTravelWhom = arrayListOf<String>()
+    var sTravelStyle = arrayListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySuppliesListBinding.inflate(layoutInflater)
@@ -81,6 +84,8 @@ class SuppliesList : AppCompatActivity()
             sDate = intent.getStringExtra("sDate")!!
             eDate = intent.getStringExtra("eDate")!!
             diffDay = intent.getIntExtra("diffDay", 0)!!
+            sTravelWhom = intent.getStringArrayListExtra("travelWhom")!!
+            sTravelStyle = intent.getStringArrayListExtra("travelStyle")!!
 
 
             //데이터 보여주기
@@ -88,6 +93,26 @@ class SuppliesList : AppCompatActivity()
             binding.place.setText(sPlace)
             binding.sDate.setText(sDate)
             binding.eDate.setText(eDate)
+
+            var travelWhomList = ""
+            for (item in sTravelWhom){
+                if (item == sTravelWhom.last()){
+                    travelWhomList += item
+                } else {
+                    travelWhomList += "${item} / "
+                }
+            }
+            binding.travelWhom.setText(travelWhomList)
+
+            var travelStyleList = ""
+            for (item in sTravelStyle){
+                if (item == sTravelStyle.last()){
+                    travelStyleList += item
+                } else {
+                    travelStyleList += "${item} / "
+                }
+            }
+            binding.travelStyle.setText(travelStyleList)
         }
 
         binding.btnMySchedule.setOnClickListener(({
@@ -98,6 +123,8 @@ class SuppliesList : AppCompatActivity()
             intent.putExtra("sDate", sDate)
             intent.putExtra("eDate", eDate)
             intent.putExtra("diffDay", diffDay)
+            intent.putExtra("travelWhom", sTravelWhom)
+            intent.putExtra("travelStyle", sTravelStyle)
             Toast.makeText(this, "${sKey}", Toast.LENGTH_SHORT).show()
             startActivity(intent)
             finish()
@@ -111,6 +138,8 @@ class SuppliesList : AppCompatActivity()
             intent.putExtra("sDate", sDate)
             intent.putExtra("eDate", eDate)
             intent.putExtra("diffDay", diffDay)
+            intent.putExtra("travelWhom", sTravelWhom)
+            intent.putExtra("travelStyle", sTravelStyle)
             Toast.makeText(this, "${sKey}", Toast.LENGTH_SHORT).show()
             startActivity(intent)
             finish()

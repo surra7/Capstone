@@ -25,6 +25,8 @@ class AddActivity : AppCompatActivity() {
     var diffDay: Int = 0
     lateinit var time: String
     lateinit var location: String
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
 
     /*lateinit var sLocation: String
     lateinit var sLatLong: String*/
@@ -138,7 +140,7 @@ class AddActivity : AppCompatActivity() {
             /*val day = binding.dayEdit.text.toString()*/
             val memo = binding.memoEdit.text.toString()
 
-            val schedule = ScheduleData(sKey, "", sDay, place, time, memo, location, diffDay)
+            val schedule = ScheduleData(sKey, "", sDay, place, time, memo, location, latitude, longitude, diffDay)
 
             dao.add2(sKey, schedule)?.addOnSuccessListener {
                 Toast.makeText(this, "등록 성공", Toast.LENGTH_SHORT).show()
@@ -168,9 +170,9 @@ class AddActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == 123) {
             location = data?.getStringExtra("location")!!
-            /*var latLong = data?.getStringExtra("latLong")*/
+            latitude = data.getDoubleExtra("latitude", 0.0)!!
+            longitude = data.getDoubleExtra("longitude", 0.0)!!
             Toast.makeText(this, "${location}", Toast.LENGTH_SHORT).show()
-            /*Toast.makeText(this, "${latLong}", Toast.LENGTH_SHORT).show()*/
             binding.locationEdit.text= location
         }
 

@@ -44,6 +44,9 @@ class TodoList : AppCompatActivity()
     var diffDay: Int = 0
     var flag: Int = 0
 
+    var sTravelWhom = arrayListOf<String>()
+    var sTravelStyle = arrayListOf<String>()
+
     var todoDB = Firebase.database.reference.child("todo")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +94,8 @@ class TodoList : AppCompatActivity()
             sDate = intent.getStringExtra("sDate")!!
             eDate = intent.getStringExtra("eDate")!!
             diffDay = intent.getIntExtra("diffDay", 0)!!
+            sTravelWhom = intent.getStringArrayListExtra("travelWhom")!!
+            sTravelStyle = intent.getStringArrayListExtra("travelStyle")!!
 
             //데이터 보여주기
             binding.travelName.setText(sName)
@@ -98,9 +103,25 @@ class TodoList : AppCompatActivity()
             binding.sDate.setText(sDate)
             binding.eDate.setText(eDate)
 
-            /*val intent = Intent(this, OneFragment::class.java)
-            intent.putExtra("key1", sKey)*/
+            var travelWhomList = ""
+            for (item in sTravelWhom){
+                if (item == sTravelWhom.last()){
+                    travelWhomList += item
+                } else {
+                    travelWhomList += "${item} / "
+                }
+            }
+            binding.travelWhom.setText(travelWhomList)
 
+            var travelStyleList = ""
+            for (item in sTravelStyle){
+                if (item == sTravelStyle.last()){
+                    travelStyleList += item
+                } else {
+                    travelStyleList += "${item} / "
+                }
+            }
+            binding.travelStyle.setText(travelStyleList)
         }
 
         binding.btnMySchedule.setOnClickListener(({
@@ -111,6 +132,8 @@ class TodoList : AppCompatActivity()
             intent.putExtra("sDate", sDate)
             intent.putExtra("eDate", eDate)
             intent.putExtra("diffDay", diffDay)
+            intent.putExtra("travelWhom", sTravelWhom)
+            intent.putExtra("travelStyle", sTravelStyle)
             Toast.makeText(this, "${sKey}", Toast.LENGTH_SHORT).show()
             startActivity(intent)
             finish()
@@ -124,6 +147,8 @@ class TodoList : AppCompatActivity()
             intent.putExtra("sDate", sDate)
             intent.putExtra("eDate", eDate)
             intent.putExtra("diffDay", diffDay)
+            intent.putExtra("travelWhom", sTravelWhom)
+            intent.putExtra("travelStyle", sTravelStyle)
             Toast.makeText(this, "${sKey}", Toast.LENGTH_SHORT).show()
             startActivity(intent)
             finish()

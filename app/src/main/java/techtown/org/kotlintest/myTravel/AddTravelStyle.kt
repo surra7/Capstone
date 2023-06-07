@@ -20,6 +20,9 @@ class AddTravelStyle : AppCompatActivity() {
     lateinit var eDate: String
     var diffDay: Int = 0
 
+    var sTravelWhom = arrayListOf<String>()
+    var sTravelStyle = arrayListOf<String>()
+
     lateinit var dao: TravelDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +51,7 @@ class AddTravelStyle : AppCompatActivity() {
             diffDay = intent.getIntExtra("diffDay", 0)!!
         }
 
-        var sTravelWhom = arrayListOf<String>()
-        var sTravelStyle = arrayListOf<String>()
+        binding.applyDate.isEnabled = false
 
         binding.selectAlone.setOnClickListener {
             var whom = binding.selectAlone.text.toString()
@@ -60,9 +62,8 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
-
-            }
+            buttonCheck()
+        }
 
         binding.selectFriend.setOnClickListener {
             var whom = binding.selectFriend.text.toString()
@@ -73,7 +74,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectCouple.setOnClickListener {
@@ -85,7 +86,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectKids.setOnClickListener {
@@ -97,7 +98,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectParents.setOnClickListener {
@@ -109,7 +110,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectEtc.setOnClickListener {
@@ -121,7 +122,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelWhom.remove(whom)
             }
-            Toast.makeText(this, "${sTravelWhom}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectActivity.setOnClickListener {
@@ -134,7 +135,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectSnsHot.setOnClickListener {
@@ -146,7 +147,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectFoodTour.setOnClickListener {
@@ -158,7 +159,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectTourist.setOnClickListener {
@@ -170,7 +171,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectHealing.setOnClickListener {
@@ -182,7 +183,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectScenery.setOnClickListener {
@@ -194,7 +195,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectShopping.setOnClickListener {
@@ -206,7 +207,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectCultureArt.setOnClickListener {
@@ -218,7 +219,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         binding.selectEtcStyle.setOnClickListener {
@@ -230,7 +231,7 @@ class AddTravelStyle : AppCompatActivity() {
             } else {
                 sTravelStyle.remove(style)
             }
-            Toast.makeText(this, "${sTravelStyle}", Toast.LENGTH_SHORT).show()
+            buttonCheck()
         }
 
         //데이터베이스 객체
@@ -266,6 +267,11 @@ class AddTravelStyle : AppCompatActivity() {
             }
         }
 
+    }
+
+    //travelWhom과 travelStyle 모두 선택해야 버튼 활성화
+    private fun buttonCheck(){
+        binding.applyDate.isEnabled = !(sTravelWhom.isEmpty() || sTravelStyle.isEmpty())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -8,11 +8,13 @@ data class ScheduleData (
     var time : String,
     var memo : String,
     var location: String,
+    var latitude: Double,
+    var longitude: Double,
     var diffDay: Int = 0,
     //val img : Int
 
 ){
-    constructor(): this("", "","","", "", "", "", 0)
+    constructor(): this("", "","","", "", "", "", 0.0, 0.0, 0)
 
 
 }

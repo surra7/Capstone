@@ -26,11 +26,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import techtown.org.kotlintest.LoginActivity
 import techtown.org.kotlintest.User
 import techtown.org.kotlintest.databinding.ActivityEditInfoBinding
-import techtown.org.kotlintest.databinding.ActivitySignupBinding
-import techtown.org.kotlintest.fragment.UserFragment
 import java.io.ByteArrayOutputStream
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException

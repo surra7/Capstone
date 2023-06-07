@@ -70,12 +70,10 @@ class Add_Country : AppCompatActivity()/*, View.OnClickListener*/ {
             add(CountryData("", "Tokyo"))
             add(CountryData("", "Fukuoka"))
             add(CountryData("", "Osaka"))
-            add(CountryData("", "Kagoshima"))
             add(CountryData("", "Shizuoka"))
             add(CountryData("", "Nagoya"))
             add(CountryData("", "Okinawa"))
             add(CountryData("", "Sapporo"))
-            add(CountryData("", "Nagasaki"))
 
             /*myAdapter1.itemList = datas1*/
             /*myAdapter1.notifyDataSetChanged()*/

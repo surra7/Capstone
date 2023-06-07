@@ -24,8 +24,9 @@ class UpdateActivity : AppCompatActivity() {
     lateinit var sDay: String
     lateinit var sMemo: String
     lateinit var sLocation: String
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     var diffDay: Int = 0
-    lateinit var time: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,21 +66,20 @@ class UpdateActivity : AppCompatActivity() {
             sTime = intent.getStringExtra("time")!!
             sMemo = intent.getStringExtra("memo")!!
             sLocation = intent.getStringExtra("location")!!
+            latitude = intent.getDoubleExtra("latitude", 0.0)!!
+            longitude = intent.getDoubleExtra("longitude", 0.0)!!
             diffDay = intent.getIntExtra("diffDay", 0)!!
 
             //데이터 보여주기
             binding.placeEdit.setText(sPlace)
-            /*binding.timeEdit.setText(sTime)*/
             binding.memoEdit.setText(sMemo)
             binding.locationEdit.setText(sLocation)
         }
 
-        sLocation = ""
-
         val timePicker = findViewById<TimePicker>(R.id.timePicker)
 
         timePicker.setOnTimeChangedListener { timePicker, hourOfDay, minute ->
-            time = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)
+            sTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)
         }
 
         for (id: Int in 0 until diffDay){
@@ -113,7 +113,7 @@ class UpdateActivity : AppCompatActivity() {
             //파라미터 셋팅
             val hashMap: HashMap<String, Any> = HashMap()
             hashMap["place"] = uPlace
-            hashMap["time"] = time
+            hashMap["time"] = sTime
             hashMap["day"] = sDay
             hashMap["memo"] = uMemo
             hashMap["location"] = sLocation
@@ -151,6 +151,9 @@ class UpdateActivity : AppCompatActivity() {
 
     fun openActivityForResult() {
         val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra("location", sLocation)
+        intent.putExtra("latitude", latitude)
+        intent.putExtra("longitude", longitude)
         startActivityForResult(intent, 123)
     }
 
@@ -160,9 +163,9 @@ class UpdateActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == 123) {
             sLocation = data?.getStringExtra("location")!!
-            /*var latLong = data?.getStringExtra("latLong")*/
+            latitude = data.getDoubleExtra("latitude", 0.0)!!
+            longitude = data.getDoubleExtra("longitude", 0.0)!!
             Toast.makeText(this, "${sLocation}", Toast.LENGTH_SHORT).show()
-            /*Toast.makeText(this, "${latLong}", Toast.LENGTH_SHORT).show()*/
             binding.locationEdit.text= sLocation
         }
 

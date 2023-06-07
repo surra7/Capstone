@@ -2,8 +2,9 @@ package techtown.org.kotlintest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import techtown.org.kotlintest.account.UserFragment
 import techtown.org.kotlintest.databinding.ActivityMainBinding
-import techtown.org.kotlintest.fragment.*
+import techtown.org.kotlintest.community.*
 import techtown.org.kotlintest.myTravel.MyTravelFragment
 
 /*

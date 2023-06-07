@@ -1,4 +1,4 @@
-package techtown.org.kotlintest
+package techtown.org.kotlintest.community
 
 import android.app.Activity
 import android.os.Bundle

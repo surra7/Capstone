@@ -100,7 +100,7 @@
             android:name=".account.InformationActivity"
             android:exported="false" />
         <activity
-            android:name=".AddNewPost"
+            android:name=".community.AddNewPost"
             android:exported="false" />
         <activity
             android:name=".myTravel.Add_Country"

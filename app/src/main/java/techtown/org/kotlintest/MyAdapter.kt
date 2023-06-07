@@ -29,9 +29,6 @@ import kotlin.collections.ArrayList
 
 class MyAdapter1(private val context: mySchedule, var scheduleList: MutableList<ScheduleData>) : RecyclerView.Adapter<MyAdapter1.ViewHolder>() {
 
-    //var datas = mutableListOf<ScheduleData>()
-/*(val datas: MutableList<String>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){*/
-
     override fun getItemCount(): Int {
         return scheduleList.size ?: 0
     }
@@ -39,7 +36,7 @@ class MyAdapter1(private val context: mySchedule, var scheduleList: MutableList<
     //화면 설정
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_travel_schedule, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_recommend, parent, false)
         return ViewHolder(view)
     }
     /*RecyclerView.ViewHolder
@@ -47,14 +44,9 @@ class MyAdapter1(private val context: mySchedule, var scheduleList: MutableList<
 
     //데이터 설정
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        /*val binding=(holder as MyViewHolder).binding
-        binding.itemData.text= datas!![position]*/
-
-        //holder.bind(datas!![position])
 
         val schedule: ScheduleData = scheduleList[position]
         holder.txtPlace.text = schedule.place
-        holder.txtTime.text = schedule.time
 
         holder.itemView.setOnClickListener{
 
@@ -66,18 +58,18 @@ class MyAdapter1(private val context: mySchedule, var scheduleList: MutableList<
             intent.putExtra("time", schedule.time)
             intent.putExtra("day", schedule.day)
             intent.putExtra("memo", schedule.memo)
+            intent.putExtra("location", schedule.location)
+            intent.putExtra("latitude", schedule.latitude)
+            intent.putExtra("longitude", schedule.longitude)
+            intent.putExtra("diffDay", schedule.diffDay)
             /*context.startActivity(intent)
             (context as Activity).finish()*/
             ContextCompat.startActivity(holder.itemView.context, intent, null)
-
         }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        val txtPlace: TextView = itemView.findViewById(R.id.tv_tl_name)
-        val txtTime: TextView = itemView.findViewById(R.id.tv_tl_time)
-
+        val txtPlace: TextView = itemView.findViewById(R.id.tv_rc_name)
     }
 }
 
@@ -131,6 +123,8 @@ class InRecyclerViewAdapter(context: Context, var itemList: MutableList<Schedule
             intent.putExtra("day", item.day)
             intent.putExtra("memo", item.memo)
             intent.putExtra("location", item.location)
+            intent.putExtra("latitude", item.latitude)
+            intent.putExtra("longitude", item.longitude)
             intent.putExtra("diffDay", item.diffDay)
             /*context.startActivity(intent)
             (context as Activity).finish()*/
@@ -242,7 +236,6 @@ class MyAdapter2(private val context: Add_Country, var itemList: ArrayList<Count
     var itemFilter = ItemFilter()
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
         val txtName: TextView
 
         /*fun bind(item: TravelData) {
@@ -266,13 +259,8 @@ class MyAdapter2(private val context: Add_Country, var itemList: ArrayList<Count
             .inflate(R.layout.item_country, parent, false)
         return ViewHolder(view)
     }
-    /*RecyclerView.ViewHolder
-    = MyViewHolder(ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))*/
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        /*val binding=(holder as MyViewHolder).binding
-        binding.itemData.text= datas!![position]*/
-
         val country: CountryData = filteredCountry[position]
         holder.txtName.text = country.countryName
 
@@ -290,6 +278,7 @@ class MyAdapter2(private val context: Add_Country, var itemList: ArrayList<Count
 
             ContextCompat.startActivity(holder.itemView.context, intent, null)
 */
+
             itemClickListener.onClick(it, position)
         }
     }

@@ -26,8 +26,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapBinding
     var placesClient: PlacesClient? = null
 
-    private lateinit var address: String
-    private lateinit var latLong: String
+    private lateinit var location: String
+
+    var latitude: Double = 23.0225
+    var longitude: Double = 72.5714
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, apiKey)
         }
+
+        if(intent.hasExtra("latitude") && intent.hasExtra("longitude")
+            && intent.hasExtra("location")) {
+
+            location = intent.getStringExtra("location")!!
+            latitude = intent.getDoubleExtra("latitude", 0.0)!!
+            longitude = intent.getDoubleExtra("longitude", 0.0)!!
+        } else {
+            location = ""
+        }
+
         // Create a new Places client instance.
         placesClient = Places.createClient(this)
 
@@ -58,23 +71,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                address = place.address.toString()
+                location = place.address.toString()
 
-                latLong = "${place.latLng?.latitude} :: ${place.latLng?.longitude}"
+                latitude = place.latLng?.latitude!!
+                longitude = place.latLng?.longitude!!
 
-                Toast.makeText(applicationContext, "${place.latLng?.latitude}", Toast.LENGTH_SHORT).show()
-                Toast.makeText(applicationContext, "${place.latLng?.longitude}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "${latitude}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "${longitude}", Toast.LENGTH_SHORT).show()
 
-                val searchedLocation = LatLng(place.latLng?.latitude!!, place.latLng?.longitude!!)
+                val searchedLocation = LatLng(latitude, longitude)
                 mMap.addMarker(MarkerOptions().position(searchedLocation).title("Searched Location"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(searchedLocation))
-
-                /*val resultIntent = Intent()
-
-                resultIntent.putExtra("location", address)
-                resultIntent.putExtra("latlong", latLong)
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()*/
             }
 
             override fun onError(status: Status) {
@@ -85,20 +92,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.applyLocation.setOnClickListener {
             val resultIntent = Intent()
 
-            resultIntent.putExtra("location", address)
-            resultIntent.putExtra("latLong", latLong)
+            resultIntent.putExtra("location", location)
+            resultIntent.putExtra("latitude", latitude)
+            resultIntent.putExtra("longitude", longitude)
+
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
         // Add a marker in Ahmedabad and move the camera
-        val Ahmedabad = LatLng(23.0225, 72.5714)
-        mMap.addMarker(MarkerOptions().position(Ahmedabad).title("Marker in Ahmedabad"))
+        val Ahmedabad = LatLng(latitude, longitude)
+        mMap.addMarker(MarkerOptions().position(Ahmedabad).title("Set Location"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Ahmedabad))
     }
 }
