@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <!-- google map -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CapstoneTest"
+        tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC4AeZz7W9cy3TYdTV3HLIHRymyE7Y3_4c" />
+
+        <activity
+            android:name=".myTravel.AddTravelStyle"
+            android:exported="false" />
+        <activity
+            android:name=".mySchedule.MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".mySchedule.UpdateSuppliesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".mySchedule.UpdateTodoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".mySchedule.AddSuppliesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".mySchedule.AddTodoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".mySchedule.SuppliesList"
+            android:exported="false" />
+        <activity
+            android:name=".mySchedule.TodoList"
+            android:exported="false" />
+        <activity
+            android:name=".mySchedule.mySchedule"
+            android:exported="false" />
+        <activity
+            android:name=".mySchedule.UpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".account.EditInformation"
+            android:exported="false" />
+        <activity
+            android:name=".account.OcrActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.LikedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.SavedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.myPostsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.FriendsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.InformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".community.AddNewPost"
+            android:exported="false" />
+        <activity
+            android:name=".myTravel.Add_Country"
+            android:exported="false" />
+        <activity
+            android:name=".myTravel.AddActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".mySchedule.AddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+    </application>
+
+</manifest>
