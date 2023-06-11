@@ -8,7 +8,9 @@ data class User(
     var id: String,
     var nickname: String,
     var passwordHashed: String,
-    var profilePicUri: String
+    var profilePicUri: String,
+    var heartList: ArrayList<String>,
+    var bookmarkList: ArrayList<String>,
 ){
-    constructor(): this("","","","", "", "")
+    constructor(): this("","","","", "", "", arrayListOf(), arrayListOf())
 }

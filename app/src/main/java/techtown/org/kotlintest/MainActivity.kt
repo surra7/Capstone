@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_community ->{
                     if(communityFragment == null){
                         communityFragment = CommunityFragment()
-                        myTravelFragment!!.arguments = bundle
+                        communityFragment!!.arguments = bundle
                         fragmentManager.beginTransaction().add(R.id.main_content,communityFragment!!).commit()
                     }
                     if(homeFragment != null) fragmentManager.beginTransaction().hide(homeFragment!!).commit()

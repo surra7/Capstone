@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.graphics.Rect
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +17,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import techtown.org.kotlintest.community.CommunityFragment
+import techtown.org.kotlintest.community.DetailPost
+import techtown.org.kotlintest.community.PostData
 import techtown.org.kotlintest.databinding.ItemDayListBinding
 import techtown.org.kotlintest.databinding.ItemTravelScheduleBinding
 import techtown.org.kotlintest.mySchedule.*
@@ -145,6 +151,81 @@ class InRecyclerViewAdapter(context: Context, var itemList: MutableList<Schedule
         }
     }
 
+}
+
+class MyPostAdapter(private val context: CommunityFragment) :
+    RecyclerView.Adapter<MyPostAdapter.ViewHolder>() {
+
+    var datas = mutableListOf<PostData>()
+    var storage = Firebase.storage
+
+/*(val datas: MutableList<String>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){*/
+
+    override fun getItemCount(): Int {
+        return datas?.size ?: 0
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_post, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        val post: PostData = datas[position]
+        val id = post.userId
+        val profilePic = storage.reference.child("profile").child("photo").child("${id}.png")
+        holder.txtName.text = post.userName
+        holder.txtId.text = post.userId
+        holder.txtContext.text = post.postContext
+        holder.txtTime.text = post.postTime
+        holder.txtHeart.text = post.cntHeart.toString()
+        holder.txtComment.text = post.cntComment.toString()
+        holder.txtBookmark.text = post.cntBookmark.toString()
+
+        profilePic.downloadUrl.addOnSuccessListener(){
+            Glide.with(context)
+                .load(it as Uri)
+                .into(holder.imgProfile)
+        }
+        /*holder.imgProfile = post.postContext*/
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailPost::class.java)
+            intent.putExtra("uid", post.Uid)
+            intent.putExtra("key", post.postKey)
+            intent.putExtra("name", post.userName)
+            intent.putExtra("id", post.userId)
+            intent.putExtra("context", post.postContext)
+            intent.putExtra("uri", post.profileUri)
+            intent.putExtra("time", post.postTime)
+            intent.putExtra("heart", post.cntHeart)
+            intent.putExtra("comment", post.cntComment)
+            intent.putExtra("bookmark", post.cntBookmark)
+
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
+    }
+
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        val imgProfile: ImageView = itemView.findViewById(R.id.imageProfile)
+        val txtName: TextView = itemView.findViewById(R.id.userName)
+        val txtId: TextView = itemView.findViewById(R.id.userId)
+        val txtContext: TextView = itemView.findViewById(R.id.postContext)
+        val txtTime: TextView = itemView.findViewById(R.id.post_time)
+        val txtHeart: TextView = itemView.findViewById(R.id.cnt_heart)
+        val txtComment: TextView = itemView.findViewById(R.id.cnt_comment)
+        val txtBookmark: TextView = itemView.findViewById(R.id.cnt_bookmark)
+
+        /*fun bind(item: TravelData) {
+            txtName.text = item.name
+            txtsDate.text = item.sDate
+            txteDate.text = item.eDate
+        }*/
+
+    }
 }
 
 class MyAdapter(private val context: MyTravelFragment) :
