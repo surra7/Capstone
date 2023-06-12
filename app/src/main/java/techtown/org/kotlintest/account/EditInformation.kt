@@ -278,7 +278,7 @@ class EditInformation : AppCompatActivity() {
 
         val mDbRef = FirebaseDatabase.getInstance().getReference("user").child(uId)
         mDbRef.removeValue()
-        mDbRef.setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri.toString()))
+        mDbRef.setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri.toString(), arrayListOf(), arrayListOf()))
 //        val user = mutableMapOf<String,Any>()
 //        user["email"] = email
 //        user["passwordHashed"] = passwordHashed

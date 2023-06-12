@@ -11,7 +11,11 @@ import android.view.View
 import android.widget.ImageView
 
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
 import techtown.org.kotlintest.R
+import techtown.org.kotlintest.User
+import techtown.org.kotlintest.community.PostData
+import techtown.org.kotlintest.mySchedule.TodoData
 import java.io.*
 
 class OcrActivity : AppCompatActivity() {
@@ -67,6 +71,19 @@ class OcrActivity : AppCompatActivity() {
         var authority: String
         var dateOfIssue: Int
         var dateOfExpiry: Int
+
+
+        /*//아래 처럼 그냥 하면됨 ㅇㅇ
+        // DB 저장
+        private fun addUserToDatabase(email: String, uId: String, id: String, nickname: String, passwordHashed: String, profilePicUri: String){
+            mDbRef.child("user").child(uId).setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri, arrayListOf(), arrayListOf()))
+        }
+
+        //아님 이거처럼 push()로 해도 되고 아무렇게나
+        //등록
+        fun add(post: PostData?): Task<Void> {
+            mDbRef.child("user").push().setValue(post)
+        }*/
 
         mTess!!.setImage(image)
         OCRresult = mTess!!.utF8Text // ocr된 문자열

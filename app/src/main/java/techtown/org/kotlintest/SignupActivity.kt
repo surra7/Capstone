@@ -322,7 +322,7 @@ class SignupActivity : AppCompatActivity() {
 
     // DB 저장
     private fun addUserToDatabase(email: String, uId: String, id: String, nickname: String, passwordHashed: String, profilePicUri: String){
-        mDbRef.child("user").child(uId).setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri))
+        mDbRef.child("user").child(uId).setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri, arrayListOf(), arrayListOf()))
     }
 
     // 비밀번호 SHA-256 Hashing

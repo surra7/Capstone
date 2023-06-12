@@ -1,150 +1,191 @@
 package techtown.org.kotlintest.community
 
-import android.content.Context
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Instrumentation.ActivityResult
+import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import techtown.org.kotlintest.GalleryAdapter
+import techtown.org.kotlintest.databinding.ActivityAdd2Binding
+import techtown.org.kotlintest.databinding.ActivityAddCountryBinding
 import techtown.org.kotlintest.databinding.ActivityAddNewPostBinding
-import java.io.ByteArrayOutputStream
+import techtown.org.kotlintest.mySchedule.ScheduleDao
+import techtown.org.kotlintest.mySchedule.ScheduleData
 import java.text.SimpleDateFormat
 
 class AddNewPost : AppCompatActivity() {
     lateinit var binding: ActivityAddNewPostBinding
-    private lateinit var mDbRef: DatabaseReference
-    private lateinit var storage: FirebaseStorage
+    lateinit var galleryAdapter: GalleryAdapter
 
-    companion object{
-        lateinit var getPicView: Any
-        lateinit var uri: Any
-        lateinit var postName: String
-        lateinit var id: String
-        lateinit var postingTime: String
-    }
+    var imageList: ArrayList<Uri> = ArrayList()
+
+    lateinit var Uid: String
+    lateinit var name: String
+    lateinit var id: String
+    lateinit var postkey: String
+    var postimg = arrayListOf<String>()
+
+    var storage = Firebase.storage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val db = FirebaseDatabase.getInstance()
-        storage = Firebase.storage
-        mDbRef = db.getReference("post") // DB 대분류
-        val user = Firebase.auth.currentUser
-        val uId = user!!.uid
+        galleryAdapter = GalleryAdapter(imageList, this)
 
-        val currentTime : Long = System.currentTimeMillis() // ms로 반환
-        val dataFormat = SimpleDateFormat("_yyMMddE_HHmmss") // 년(20XX) 월 일 요일 시(0~23) 분 초
-        postingTime = dataFormat.format(currentTime)
-
-        mDbRef.addValueEventListener(object: ValueEventListener {
-            // show current user
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val nickname = snapshot.child(uId).child("nickname").value.toString()
-                id = snapshot.child(uId).child("id").value.toString()
-                val profilePic =
-                    storage.reference.child("profile").child("photo").child("${id}.png")
-                profilePic.downloadUrl.addOnSuccessListener() {
-                    Glide.with(this@AddNewPost)
-                        .load(it as Uri)
-                        .into(binding.postProfilePic)
-                }
-                binding.currentUserName.text = nickname
-                binding.currentUserId.text = id
-
-                postName = "${id}+${postingTime}"
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        binding.getPic1.setOnClickListener{
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            var postPic1Name = "${postName}_pic1"
-            var pic = getImageUri(this, uri as Bitmap)
-            storage.reference.child("post/${postName}/photo").child(postPic1Name).putFile(pic!!)
-            getPicView = binding.getPic1
-            activityResult.launch(intent)
-        }
-        binding.getPic2.setOnClickListener{
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            var postPic2Name = "${postName}_pic2"
-            var pic = getImageUri(this, uri as Bitmap)
-            storage.reference.child("post/photo/${postName}").child(postPic2Name).putFile(pic!!)
-            getPicView = binding.getPic2
-            activityResult.launch(intent)
-        }
-        binding.getPic3.setOnClickListener{
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            var postPic3Name = "${postName}_pic3"
-            var pic = getImageUri(this, uri as Bitmap)
-            storage.reference.child("post/photo/${postName}").child(postPic3Name).putFile(pic!!)
-            getPicView = binding.getPic3
-            activityResult.launch(intent)
-        }
-
-        binding.addNewPostBtn.setOnClickListener {
-            var postText = binding.postTextEdit.text.toString().trim()
-            mDbRef.child(postName).child("text").setValue(postText) // post 하위에 postName(id+업로드(날짜,시간)) 하위에 text 하위에 postText 저장
-            mDbRef.child(postName).child("location").setValue("temp location String") // 위에서 text 말고 location 하위에 임시로 String 업로드(사유: 지도 위치를 모름..ㅠ)
-        }
+        binding.imgRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.imgRecycler.adapter = galleryAdapter
 
         setSupportActionBar(binding.topBar)
         //툴바에 타이틀 없애기
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        /*toggle = ActionBarDrawerToggle(this, binding.btnSave, R.string.drawer_opened,
-            R.string.drawer_closed
-        )*/
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.addImg.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            activityResult.launch(intent)
+        }
+
+        val dao = PostDao()
+
+        val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm")
+        val postTime: String = formatter.format(java.util.Date())
+
+        if(intent.hasExtra("uid") && intent.hasExtra("name")
+            && intent.hasExtra("id")) {
+
+            Uid = intent.getStringExtra("uid")!!
+            name = intent.getStringExtra("name")!!
+            id = intent.getStringExtra("id")!!
+
+            //데이터 보여주기
+            binding.userName.setText(name)
+            binding.userId.setText(id)
+
+            val profilePic = storage.reference.child("profile").child("photo").child("${id}.png")
+
+            profilePic.downloadUrl.addOnSuccessListener(){
+                Glide.with(this)
+                    .load(it as Uri)
+                    .into(binding.imgProfile)
+            }
+        }
+
+        val formatte = SimpleDateFormat("yyyyMMHH_mmss")
+        /*val now = LocalDateTime.now()*/
+        val posttime: String = formatte.format(java.util.Date())
+        postkey = posttime + Uid
+
+        binding.addNewPost.setOnClickListener{
+            val context = binding.postContext.text.toString()
+
+            for (i in 0 until imageList.size){
+                uploadFile(imageList[i], i)
+            }
+
+            val post = PostData(Uid, postkey, name, id, context, "", postTime, 0, 0, 0, postimg)
+
+            dao.add(post)?.addOnSuccessListener {
+                Toast.makeText(this, "Add SUCCESS", Toast.LENGTH_SHORT).show()
+            }?.addOnFailureListener {
+                Toast.makeText(this, "Add FAIL: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+
+            val intent = intent
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
-        if(it.resultCode== RESULT_OK && it.data != null) {
-            uri = it.data!!.data!!
-            Glide.with(this)
-                .load(uri)
-                .into(getPicView as ImageView)
+            if (it.resultCode == RESULT_OK){
+                //멀티 선택은 clipData
+                if (it.data!!.clipData != null){
+                    val count = it.data!!.clipData!!.itemCount
+
+                    for (index in 0 until count){
+                        val imageUri = it.data!!.clipData!!.getItemAt(index).uri
+                        imageList.add(imageUri)
+                    }
+                } else{ //싱글 이미지
+                    val imageUri = it.data!!.data
+                    imageList.add(imageUri!!)
+                }
+                galleryAdapter.notifyDataSetChanged()
+            }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun uploadFile(uri: Uri, i: Int) {
+        //업로드할 파일이 있으면 수행
+        if (uri != null) {
+            //업로드 진행 Dialog 보이기
+            /*val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("uploading...")
+            progressDialog.show()*/
+
+            //storage
+            val storage = FirebaseStorage.getInstance()
+
+            //Unique한 파일명을 만들자.
+            val formatter = SimpleDateFormat("yyyyMMHH_mmss")
+            /*val now = LocalDateTime.now()*/
+            val filename: String = formatter.format(java.util.Date())
+            //storage 주소와 폴더 파일명을 지정해 준다.
+            val storageRef = storage.getReferenceFromUrl("gs://test-b6cf3.appspot.com/").child("posts").child(postkey).child(filename + i.toString())
+            postimg.add(filename + i.toString())
+            //올라가거라...
+            storageRef.putFile(uri!!) //성공시
+                .addOnSuccessListener {
+                    /*progressDialog.dismiss() //업로드 진행 Dialog 상자 닫기*/
+                    Toast.makeText(applicationContext, "업로드 완료!", Toast.LENGTH_SHORT).show()
+                } //실패시
+                .addOnFailureListener {
+                    /*progressDialog.dismiss()*/
+                    Toast.makeText(applicationContext, "업로드 실패!", Toast.LENGTH_SHORT).show()
+                } //진행중
+                /*.addOnProgressListener { taskSnapshot ->
+                    val progress//이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+                            =
+                        (100 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toDouble()
+                    //dialog에 진행률을 퍼센트로 출력해 준다
+                   *//* progressDialog.setMessage("Uploaded " + progress.toInt() + "% ...")*//*
+                }*/
+        } else {
+            Toast.makeText(applicationContext, "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Bitmap to Uri
-    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            inImage,
-            "Title",
-            null
-        )
-        return Uri.parse(path)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val intent = intent
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                return true
+            }
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                val intent = intent
-//                setResult(Activity.RESULT_OK, intent)
-//                finish()
-//                return true
-//            }
-//            else -> {}
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 }

@@ -138,7 +138,7 @@ class InformationActivity : AppCompatActivity() {
                         /*//Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                         val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
                         ivPreview.setImageBitmap(bitmap)*/
-                        uploadFile();
+                        uploadFile()
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
