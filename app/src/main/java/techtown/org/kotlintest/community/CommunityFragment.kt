@@ -6,9 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,15 +24,18 @@ import com.google.firebase.ktx.Firebase
 import techtown.org.kotlintest.MyAdapter
 import techtown.org.kotlintest.MyDecoration
 import techtown.org.kotlintest.MyPostAdapter
+import techtown.org.kotlintest.R
 import techtown.org.kotlintest.databinding.FragmentCommunityBinding
 import techtown.org.kotlintest.myTravel.TravelDao
 import techtown.org.kotlintest.myTravel.TravelData
 
 class CommunityFragment : Fragment() {
+    val TAG = "CommunityFragment"
     var dao = PostDao()
     var postDB = Firebase.database.reference.child("post")
     lateinit var myAdapter: MyPostAdapter
-    var datas = mutableListOf<PostData>()
+    var datas = arrayListOf<PostData>()
+    lateinit var search_posts: SearchView
 
     private lateinit var mDbRef: DatabaseReference
 
@@ -48,6 +53,11 @@ class CommunityFragment : Fragment() {
         val db = FirebaseDatabase.getInstance()
         mDbRef = db.getReference("user")
 
+        val layoutManager = LinearLayoutManager(activity)
+        binding.postsRecycle.layoutManager = layoutManager
+        myAdapter = MyPostAdapter(this)
+        binding.postsRecycle.adapter = myAdapter
+
         /*nickname = userDB.child(Uid!!).child("nickname").toString()
         id = userDB.child(Uid!!).child("id").toString()*/
 
@@ -61,11 +71,6 @@ class CommunityFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
-
-        val layoutManager = LinearLayoutManager(activity)
-        binding.postsRecycle.layoutManager = layoutManager
-        myAdapter = MyPostAdapter(this)
-        binding.postsRecycle.adapter = myAdapter
         /*binding.postsRecycle.addItemDecoration(MyDecoration(activity as Context))*/
 
         binding.addNewPost.setOnClickListener(({
@@ -78,6 +83,9 @@ class CommunityFragment : Fragment() {
 
         getPostList()
 
+        search_posts = binding.searchPosts
+        search_posts.setOnQueryTextListener(searchViewTextListener)
+
         return binding.root
     }
 
@@ -89,7 +97,7 @@ class CommunityFragment : Fragment() {
                 datas.apply {
                     add(
                         PostData(
-                            Uid!!, "", "mochi", "subin", "If you want to try monja-yaki,\n" +
+                            Uid!!, "", "", "mochi", "subin", "If you want to try monja-yaki,\n" +
                                     "\ti really recommend here!\n" +
                                     "The servers are really kind\n" +
                                     "\tand you can talk with them in English.\n" +
@@ -99,12 +107,13 @@ class CommunityFragment : Fragment() {
                         ))
                     add(
                         PostData(
-                            Uid!!, "", "duckky", "qqq", "Is there any great place to have dinner\n" +
+                            Uid!!, "", "", "duckky", "qqq", "Is there any great place to have dinner\n" +
                                     "at late night?\n" +
                                     "We are near of Sensoji Temple now\n" +
                                     "but can go anywhere if we go by walk.\n" +
                                     "It would be better\tif we can have beer or so.", "qqq.png", "2023/05/15 14:00", 20, 4, 6, arrayListOf()
                         ))
+                    datas.sortByDescending { it.cntHeart }
                     myAdapter.datas = datas
                     myAdapter.notifyDataSetChanged()
                 }
@@ -116,14 +125,15 @@ class CommunityFragment : Fragment() {
                     //키 값 가져오기
                     val key = dataSnapshot.key
                     //schedule 정보에 키 값 담기
-                    /*postList?.postKey = key.toString()*/
+                    postList?.key = key.toString()
 
-                    /*if (postList != null) {
-                        postDB.child(postList.postKey).child("postKey").setValue(key.toString())
-                    }*/
+                    if (postList != null) {
+                        postDB.child(postList.key).child("key").setValue(key.toString())
+                    }
 
                     if (postList != null) {
                         datas.add(postList)
+                        datas.sortByDescending { it.cntHeart }
                     }
                 }
                 //데이터 적용
@@ -136,4 +146,19 @@ class CommunityFragment : Fragment() {
 
         })
     }
+
+    var searchViewTextListener: SearchView.OnQueryTextListener =
+        object : SearchView.OnQueryTextListener {
+            //검색버튼 입력시 호출, 검색버튼이 없으므로 사용하지 않음
+            override fun onQueryTextSubmit(s: String): Boolean {
+                return false
+            }
+
+            //텍스트 입력/수정시에 호출
+            override fun onQueryTextChange(s: String): Boolean {
+                myAdapter.getFilter().filter(s)
+                Log.d(TAG, "SearchVies Text is changed : $s")
+                return false
+            }
+        }
 }

@@ -2,6 +2,7 @@ package techtown.org.kotlintest.community
 
 data class PostData(
     var Uid: String,
+    var key: String,
     var postKey: String,
     var userName: String,
     var userId : String,
@@ -13,5 +14,5 @@ data class PostData(
     var cntBookmark: Int,
     var postImg: ArrayList<String>,
 ){
-    constructor(): this("", "","","","", "", "", 0, 0, 0, arrayListOf())
+    constructor(): this("", "", "","","","", "", "", 0, 0, 0, arrayListOf())
 }

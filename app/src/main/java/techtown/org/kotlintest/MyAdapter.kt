@@ -15,14 +15,17 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import techtown.org.kotlintest.community.CommentData
 import techtown.org.kotlintest.community.CommunityFragment
 import techtown.org.kotlintest.community.DetailPost
 import techtown.org.kotlintest.community.PostData
@@ -154,15 +157,41 @@ class InRecyclerViewAdapter(context: Context, var itemList: MutableList<Schedule
 }
 
 class MyPostAdapter(private val context: CommunityFragment) :
-    RecyclerView.Adapter<MyPostAdapter.ViewHolder>() {
+    RecyclerView.Adapter<MyPostAdapter.ViewHolder>(), Filterable {
+    val user = Firebase.auth.currentUser
+    val myUid = user!!.uid
+    var datas = arrayListOf<PostData>()
 
-    var datas = mutableListOf<PostData>()
+    var TAG = "MyPostAdapter"
+    var filteredPost = ArrayList<PostData>()
+    var itemFilter = ItemFilter()
+
     var storage = Firebase.storage
 
-/*(val datas: MutableList<String>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){*/
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        val imgProfile: ImageView
+        val txtName: TextView
+        val txtId: TextView
+        val txtContext: TextView
+        val txtTime: TextView
+        val txtHeart: TextView
+        val txtComment: TextView
+        val txtBookmark: TextView
 
-    override fun getItemCount(): Int {
-        return datas?.size ?: 0
+        init {
+            imgProfile = itemView.findViewById(R.id.imageProfile)
+            txtName = itemView.findViewById(R.id.userName)
+            txtId = itemView.findViewById(R.id.userId)
+            txtContext = itemView.findViewById(R.id.postContext)
+            txtTime = itemView.findViewById(R.id.post_time)
+            txtHeart = itemView.findViewById(R.id.cnt_heart)
+            txtComment = itemView.findViewById(R.id.cnt_comment)
+            txtBookmark = itemView.findViewById(R.id.cnt_bookmark)
+        }
+    }
+
+    init {
+        filteredPost.addAll(datas)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -171,9 +200,14 @@ class MyPostAdapter(private val context: CommunityFragment) :
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun getItemCount(): Int {
+        /*return datas?.size ?: 0*/
+        return filteredPost?.size ?: 0
+    }
 
-        val post: PostData = datas[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val post: PostData = filteredPost[position]
+        /*val post: PostData = datas[position]*/
         val id = post.userId
         val profilePic = storage.reference.child("profile").child("photo").child("${id}.png")
         holder.txtName.text = post.userName
@@ -194,7 +228,8 @@ class MyPostAdapter(private val context: CommunityFragment) :
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailPost::class.java)
             intent.putExtra("uid", post.Uid)
-            intent.putExtra("key", post.postKey)
+            intent.putExtra("key", post.key)
+            intent.putExtra("postKey", post.postKey)
             intent.putExtra("name", post.userName)
             intent.putExtra("id", post.userId)
             intent.putExtra("context", post.postContext)
@@ -209,23 +244,48 @@ class MyPostAdapter(private val context: CommunityFragment) :
         }
     }
 
-    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    override fun getFilter(): Filter {
+        return itemFilter
+    }
 
-        val imgProfile: ImageView = itemView.findViewById(R.id.imageProfile)
-        val txtName: TextView = itemView.findViewById(R.id.userName)
-        val txtId: TextView = itemView.findViewById(R.id.userId)
-        val txtContext: TextView = itemView.findViewById(R.id.postContext)
-        val txtTime: TextView = itemView.findViewById(R.id.post_time)
-        val txtHeart: TextView = itemView.findViewById(R.id.cnt_heart)
-        val txtComment: TextView = itemView.findViewById(R.id.cnt_comment)
-        val txtBookmark: TextView = itemView.findViewById(R.id.cnt_bookmark)
+    inner class ItemFilter : Filter() {
+        override fun performFiltering(charSequence: CharSequence): FilterResults {
+            val filterString = charSequence.toString()
+            val results = FilterResults()
+            Log.d(TAG, "charSequence : $charSequence")
 
-        /*fun bind(item: TravelData) {
-            txtName.text = item.name
-            txtsDate.text = item.sDate
-            txteDate.text = item.eDate
-        }*/
+            //검색이 필요없을 경우를 위해 원본 배열을 복제
+            val filteredList: ArrayList<PostData> = ArrayList<PostData>()
+            //공백제외 아무런 값이 없을 경우 -> 원본 배열
+            if (filterString.trim { it <= ' ' }.isEmpty()) {
+                results.values = datas
+                results.count = datas.size
 
+                return results
+            } else {
+                for (item in datas) {
+                    if (item.postContext.contains(filterString) ||
+                        item.postContext.contains(filterString.replaceFirstChar { //첫글자만 대문자로
+                            if (it.isLowerCase()) it.titlecase(
+                                Locale.getDefault()
+                            ) else it.toString()
+                        })) {
+                        filteredList.add(item)
+                    }
+                }
+            }
+            results.values = filteredList
+            results.count = filteredList.size
+
+            return results
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults) {
+            filteredPost.clear()
+            filteredPost.addAll(filterResults.values as ArrayList<PostData>)
+            notifyDataSetChanged()
+        }
     }
 }
 
@@ -658,55 +718,81 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     }
 }
 
-class GalleryAdapter2() : RecyclerView.Adapter<GalleryAdapter2.ViewHolder>() {
-
-    lateinit var imageList: ArrayList<Uri>
-    lateinit var context: Context
-
-    constructor(imageList: ArrayList<Uri>, context: Context): this(){
-        this.imageList = imageList
-        this.context = context
-    }
+class CommentAdapter(private val context: DetailPost) :
+    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+    val user = Firebase.auth.currentUser
+    val myUid = user!!.uid
+    var datas = mutableListOf<CommentData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_image, parent, false)
+            .inflate(R.layout.item_comment, parent, false)
         return ViewHolder(view)
     }
-    /*RecyclerView.ViewHolder
-    = MyViewHolder(ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))*/
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context)
-            .load(imageList[position])
-            .into(holder.imageView)
+        val comment: CommentData = datas[position]
+
+        holder.txtUserName.text = comment.userName
+        holder.txtComment.text = comment.comment
+
+        val delete = holder.itemView.findViewById<ImageButton>(R.id.comment_delete)
+
+        if (comment.Uid != myUid){
+            delete.isVisible = false
+        }
+
+        delete.setOnClickListener {
+            itemClickListener.onClick(it, position, comment.key)
+        }
 
         /*holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, mySchedule::class.java)
-            intent.putExtra("uid", travel.Uid)
-            intent.putExtra("key", travel.travelKey)
-            intent.putExtra("name", travel.name)
-            intent.putExtra("place", travel.place)
-            intent.putExtra("sDate", travel.sDate)
-            intent.putExtra("eDate", travel.eDate)
-            intent.putExtra("diffDay", travel.diffDay)
-            intent.putExtra("travelWhom", travel.travelWhom)
-            intent.putExtra("travelStyle", travel.travelStyle)
-            intent.putExtra("flags", travel.flags)
+            val intent = Intent(holder.itemView.context, DetailPost::class.java)
+            intent.putExtra("uid", post.Uid)
+            intent.putExtra("key", post.key)
+            intent.putExtra("postKey", post.postKey)
+            intent.putExtra("name", post.userName)
+            intent.putExtra("id", post.userId)
+            intent.putExtra("context", post.postContext)
+            intent.putExtra("uri", post.profileUri)
+            intent.putExtra("time", post.postTime)
+            intent.putExtra("heart", post.cntHeart)
+            intent.putExtra("comment", post.cntComment)
+            intent.putExtra("bookmark", post.cntBookmark)
+            intent.putExtra("postimg", post.postImg)
 
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }*/
     }
 
-    override fun getItemCount(): Int {
-        return imageList?.size ?: 0
-    }
-
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        val imageView: ImageView = itemView.findViewById(R.id.img_view)
+        val txtUserName: TextView = itemView.findViewById(R.id.userName)
+        val txtComment: TextView = itemView.findViewById(R.id.comment)
+
+        /*fun bind(item: TravelData) {
+            txtName.text = item.name
+            txtsDate.text = item.sDate
+            txteDate.text = item.eDate
+        }*/
+
     }
+
+    override fun getItemCount(): Int {
+        return datas?.size ?: 0
+    }
+
+    // (2) 리스너 인터페이스
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int, commentKey: String)
+    }
+    // (3) 외부에서 클릭 시 이벤트 설정
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+    // (4) setItemClickListener로 설정한 함수 실행
+    private lateinit var itemClickListener : OnItemClickListener
 }
 
 class MyDecoration(val context: Context) : RecyclerView.ItemDecoration() {

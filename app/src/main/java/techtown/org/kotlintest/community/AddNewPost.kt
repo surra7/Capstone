@@ -91,7 +91,6 @@ class AddNewPost : AppCompatActivity() {
         }
 
         val formatte = SimpleDateFormat("yyyyMMHH_mmss")
-        /*val now = LocalDateTime.now()*/
         val posttime: String = formatte.format(java.util.Date())
         postkey = posttime + Uid
 
@@ -102,7 +101,7 @@ class AddNewPost : AppCompatActivity() {
                 uploadFile(imageList[i], i)
             }
 
-            val post = PostData(Uid, postkey, name, id, context, "", postTime, 0, 0, 0, postimg)
+            val post = PostData(Uid, "", postkey, name, id, context, "", postTime, 0, 0, 0, postimg)
 
             dao.add(post)?.addOnSuccessListener {
                 Toast.makeText(this, "Add SUCCESS", Toast.LENGTH_SHORT).show()
