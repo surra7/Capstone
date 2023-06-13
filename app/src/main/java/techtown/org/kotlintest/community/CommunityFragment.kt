@@ -21,21 +21,17 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.values
 import com.google.firebase.ktx.Firebase
-import techtown.org.kotlintest.MyAdapter
-import techtown.org.kotlintest.MyDecoration
-import techtown.org.kotlintest.MyPostAdapter
+import techtown.org.kotlintest.*
 import techtown.org.kotlintest.R
 import techtown.org.kotlintest.databinding.FragmentCommunityBinding
 import techtown.org.kotlintest.myTravel.TravelDao
 import techtown.org.kotlintest.myTravel.TravelData
 
 class CommunityFragment : Fragment() {
-    val TAG = "CommunityFragment"
     var dao = PostDao()
     var postDB = Firebase.database.reference.child("post")
     lateinit var myAdapter: MyPostAdapter
     var datas = arrayListOf<PostData>()
-    lateinit var search_posts: SearchView
 
     private lateinit var mDbRef: DatabaseReference
 
@@ -55,7 +51,7 @@ class CommunityFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(activity)
         binding.postsRecycle.layoutManager = layoutManager
-        myAdapter = MyPostAdapter(this)
+        myAdapter = MyPostAdapter(requireContext())
         binding.postsRecycle.adapter = myAdapter
 
         /*nickname = userDB.child(Uid!!).child("nickname").toString()
@@ -83,8 +79,10 @@ class CommunityFragment : Fragment() {
 
         getPostList()
 
-        search_posts = binding.searchPosts
-        search_posts.setOnQueryTextListener(searchViewTextListener)
+        binding.searchPosts.setOnClickListener{
+            val intent = Intent(context, SearchPost::class.java)
+            startActivity(intent)
+        }
 
         return binding.root
     }
@@ -146,19 +144,4 @@ class CommunityFragment : Fragment() {
 
         })
     }
-
-    var searchViewTextListener: SearchView.OnQueryTextListener =
-        object : SearchView.OnQueryTextListener {
-            //검색버튼 입력시 호출, 검색버튼이 없으므로 사용하지 않음
-            override fun onQueryTextSubmit(s: String): Boolean {
-                return false
-            }
-
-            //텍스트 입력/수정시에 호출
-            override fun onQueryTextChange(s: String): Boolean {
-                myAdapter.getFilter().filter(s)
-                Log.d(TAG, "SearchVies Text is changed : $s")
-                return false
-            }
-        }
 }

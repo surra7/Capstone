@@ -46,8 +46,6 @@ class MyTravelFragment: Fragment(){
         val binding = FragmentMyTravelBinding.inflate(inflater, container, false)
         Uid = arguments?.getString("uid")
 
-        Toast.makeText(context, "${Uid}", Toast.LENGTH_SHORT).show()
-
         //dao 초기화
         dao = TravelDao()
 

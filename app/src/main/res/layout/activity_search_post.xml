@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/communityView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_bar"
             app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
+            <SearchView
                 android:id="@+id/search_posts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  Search Posts"
-                android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_search"
-                android:background="@drawable/home_plan_box_background"
+                android:queryHint="Search Posts"
+                android:background="@drawable/search_bar"
                 android:layout_marginBottom="5dp"
-                android:padding="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginEnd="10dp"
+                android:iconifiedByDefault="false"/>
 
         </LinearLayout>
 
@@ -46,18 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/new_hot_posts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="New Hot Posts"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/posts_recycle"
                     android:layout_width="match_parent"
@@ -69,23 +59,10 @@
                     app:layout_constrainedHeight="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/new_hot_posts"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/item_post" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/add_newPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="New Post"
-        app:icon="@android:drawable/ic_input_add" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

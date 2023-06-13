@@ -64,14 +64,12 @@ class DetailPost : AppCompatActivity() {
     var myBookmark: String = ""
     var myname: String = ""
 
-    lateinit var sLocation: String
+    /*lateinit var sLocation: String
     var latitude: Double = 0.0
-    var longitude: Double = 0.0
+    var longitude: Double = 0.0*/
 
     val user = Firebase.auth.currentUser
     val myUid = user!!.uid
-
-    var menu : Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,7 +160,6 @@ class DetailPost : AppCompatActivity() {
             } else {
                 binding.btnHeart.isSelected = false
             }
-            Toast.makeText(this, "${myHeart}", Toast.LENGTH_SHORT).show()
         }
 
         mDbRef.child(myUid).child("bookmarkList").child(key).get().addOnSuccessListener {
@@ -172,7 +169,6 @@ class DetailPost : AppCompatActivity() {
             } else {
                 binding.btnBookmark.isSelected = false
             }
-            Toast.makeText(this, "${myBookmark}", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnHeart.setOnClickListener {
@@ -207,13 +203,13 @@ class DetailPost : AppCompatActivity() {
             }
         }
 
-        sLocation = ""
+        /*sLocation = ""*/
 
-        binding.addLocation.setOnClickListener {
-            /*val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)*/
+        /*binding.addLocation.setOnClickListener {
+            *//*val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)*//*
             openActivityForResult()
-        }
+        }*/
 
         if (Uid != myUid) {
             binding.delete.isVisible = false
@@ -235,14 +231,12 @@ class DetailPost : AppCompatActivity() {
                                 if (myHeart == key) {
                                     userDB.child(myUid).child("heartList").child(key).removeValue()
                                 }
-                                Toast.makeText(this, "${myHeart}", Toast.LENGTH_SHORT).show()
                             }
                             mDbRef.child(myUid).child("bookmarkList").child(key).get().addOnSuccessListener {
                                 myBookmark = it.getValue().toString()
                                 if (myBookmark == key) {
                                     userDB.child(myUid).child("bookmarkList").child(key).removeValue()
                                 }
-                                Toast.makeText(this, "${myBookmark}", Toast.LENGTH_SHORT).show()
                             }
 
                             val intent = intent
@@ -329,7 +323,7 @@ class DetailPost : AppCompatActivity() {
         })
     }
 
-    fun openActivityForResult() {
+    /*fun openActivityForResult() {
         val intent = Intent(this, MapsActivity::class.java)
         intent.putExtra("location", sLocation)
         intent.putExtra("latitude", latitude)
@@ -349,7 +343,7 @@ class DetailPost : AppCompatActivity() {
             binding.addLocation.text= sLocation
         }
 
-    }
+    }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {

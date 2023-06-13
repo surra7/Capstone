@@ -25,10 +25,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import techtown.org.kotlintest.community.CommentData
-import techtown.org.kotlintest.community.CommunityFragment
-import techtown.org.kotlintest.community.DetailPost
-import techtown.org.kotlintest.community.PostData
+import techtown.org.kotlintest.account.InformationActivity
+import techtown.org.kotlintest.account.fileData
+import techtown.org.kotlintest.community.*
 import techtown.org.kotlintest.databinding.ItemDayListBinding
 import techtown.org.kotlintest.databinding.ItemTravelScheduleBinding
 import techtown.org.kotlintest.mySchedule.*
@@ -156,10 +155,91 @@ class InRecyclerViewAdapter(context: Context, var itemList: MutableList<Schedule
 
 }
 
-class MyPostAdapter(private val context: CommunityFragment) :
-    RecyclerView.Adapter<MyPostAdapter.ViewHolder>(), Filterable {
-    val user = Firebase.auth.currentUser
-    val myUid = user!!.uid
+class MyPostAdapter() : RecyclerView.Adapter<MyPostAdapter.ViewHolder>(){
+    var datas = arrayListOf<PostData>()
+
+    var storage = Firebase.storage
+
+    lateinit var context: Context
+
+    constructor(context: Context): this(){
+        this.context = context
+    }
+
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        val imgProfile: ImageView
+        val txtName: TextView
+        val txtId: TextView
+        val txtContext: TextView
+        val txtTime: TextView
+        val txtHeart: TextView
+        val txtComment: TextView
+        val txtBookmark: TextView
+
+        init {
+            imgProfile = itemView.findViewById(R.id.imageProfile)
+            txtName = itemView.findViewById(R.id.userName)
+            txtId = itemView.findViewById(R.id.userId)
+            txtContext = itemView.findViewById(R.id.postContext)
+            txtTime = itemView.findViewById(R.id.post_time)
+            txtHeart = itemView.findViewById(R.id.cnt_heart)
+            txtComment = itemView.findViewById(R.id.cnt_comment)
+            txtBookmark = itemView.findViewById(R.id.cnt_bookmark)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_post, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        /*return datas?.size ?: 0*/
+        return datas?.size ?: 0
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val post: PostData = datas[position]
+        /*val post: PostData = datas[position]*/
+        val id = post.userId
+        val profilePic = storage.reference.child("profile").child("photo").child("${id}.png")
+        holder.txtName.text = post.userName
+        holder.txtId.text = post.userId
+        holder.txtContext.text = post.postContext
+        holder.txtTime.text = post.postTime
+        holder.txtHeart.text = post.cntHeart.toString()
+        holder.txtComment.text = post.cntComment.toString()
+        holder.txtBookmark.text = post.cntBookmark.toString()
+
+        profilePic.downloadUrl.addOnSuccessListener(){
+            Glide.with(context)
+                .load(it as Uri)
+                .into(holder.imgProfile)
+        }
+        /*holder.imgProfile = post.postContext*/
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailPost::class.java)
+            intent.putExtra("uid", post.Uid)
+            intent.putExtra("key", post.key)
+            intent.putExtra("postKey", post.postKey)
+            intent.putExtra("name", post.userName)
+            intent.putExtra("id", post.userId)
+            intent.putExtra("context", post.postContext)
+            intent.putExtra("uri", post.profileUri)
+            intent.putExtra("time", post.postTime)
+            intent.putExtra("heart", post.cntHeart)
+            intent.putExtra("comment", post.cntComment)
+            intent.putExtra("bookmark", post.cntBookmark)
+            intent.putExtra("postimg", post.postImg)
+
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
+    }
+}
+
+class MySearchPostAdapter(private val context: SearchPost) : RecyclerView.Adapter<MySearchPostAdapter.ViewHolder>(), Filterable {
     var datas = arrayListOf<PostData>()
 
     var TAG = "MyPostAdapter"
@@ -239,8 +319,11 @@ class MyPostAdapter(private val context: CommunityFragment) :
             intent.putExtra("comment", post.cntComment)
             intent.putExtra("bookmark", post.cntBookmark)
             intent.putExtra("postimg", post.postImg)
-
+            /*context.startActivity(intent)
+            (context as Activity).finish()*/
             ContextCompat.startActivity(holder.itemView.context, intent, null)
+            (context as Activity).finish()
+
         }
     }
 
@@ -746,24 +829,6 @@ class CommentAdapter(private val context: DetailPost) :
         delete.setOnClickListener {
             itemClickListener.onClick(it, position, comment.key)
         }
-
-        /*holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailPost::class.java)
-            intent.putExtra("uid", post.Uid)
-            intent.putExtra("key", post.key)
-            intent.putExtra("postKey", post.postKey)
-            intent.putExtra("name", post.userName)
-            intent.putExtra("id", post.userId)
-            intent.putExtra("context", post.postContext)
-            intent.putExtra("uri", post.profileUri)
-            intent.putExtra("time", post.postTime)
-            intent.putExtra("heart", post.cntHeart)
-            intent.putExtra("comment", post.cntComment)
-            intent.putExtra("bookmark", post.cntBookmark)
-            intent.putExtra("postimg", post.postImg)
-
-            ContextCompat.startActivity(holder.itemView.context, intent, null)
-        }*/
     }
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -786,6 +851,59 @@ class CommentAdapter(private val context: DetailPost) :
     // (2) 리스너 인터페이스
     interface OnItemClickListener {
         fun onClick(v: View, position: Int, commentKey: String)
+    }
+    // (3) 외부에서 클릭 시 이벤트 설정
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+    // (4) setItemClickListener로 설정한 함수 실행
+    private lateinit var itemClickListener : OnItemClickListener
+}
+
+class FileAdapter(private val context: InformationActivity) :
+    RecyclerView.Adapter<FileAdapter.ViewHolder>() {
+    val user = Firebase.auth.currentUser
+    val myUid = user!!.uid
+    var datas = mutableListOf<fileData>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_file, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        val file: fileData = datas[position]
+
+        holder.txtFileName.text = file.fileName
+
+        val download = holder.itemView.findViewById<ImageButton>(R.id.download)
+
+        download.setOnClickListener {
+            itemClickListener.onClick(it, position, file.fileName)
+        }
+    }
+
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        val txtFileName: TextView = itemView.findViewById(R.id.file_name)
+
+        /*fun bind(item: TravelData) {
+            txtName.text = item.name
+            txtsDate.text = item.sDate
+            txteDate.text = item.eDate
+        }*/
+
+    }
+
+    override fun getItemCount(): Int {
+        return datas?.size ?: 0
+    }
+
+    // (2) 리스너 인터페이스
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int, fileName: String)
     }
     // (3) 외부에서 클릭 시 이벤트 설정
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

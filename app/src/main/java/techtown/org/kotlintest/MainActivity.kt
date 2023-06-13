@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNavigation(){
         // 최초로 보이는 프래그먼트
         homeFragment = HomeFragment()
+        homeFragment!!.arguments = bundle
         fragmentManager.beginTransaction().replace(R.id.main_content,homeFragment!!).commit()
 
         binding.bottomNavigation.setOnItemSelectedListener {

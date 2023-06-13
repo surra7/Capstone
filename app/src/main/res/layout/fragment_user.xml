@@ -137,13 +137,13 @@
                 android:background="@color/colorDivision"
                 android:orientation="horizontal" />
 
-            <Button
+            <!--<Button
                 android:id="@+id/friends_btn"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@android:color/transparent"
                 android:text="Friends"
-                android:textColor="@color/black" />
+                android:textColor="@color/black" />-->
 
             <LinearLayout
                 android:id="@+id/toolbar_division2"

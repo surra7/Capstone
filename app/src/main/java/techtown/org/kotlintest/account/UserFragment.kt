@@ -73,10 +73,10 @@ class UserFragment: Fragment() {
             startActivity(intent)
         }))
 
-        binding.friendsBtn.setOnClickListener(({
+        /*binding.friendsBtn.setOnClickListener(({
             val intent = Intent(context, FriendsActivity::class.java)
             startActivity(intent)
-        }))
+        }))*/
 
         binding.myPostBtn.setOnClickListener(({
             val intent = Intent(context, myPostsActivity::class.java)
