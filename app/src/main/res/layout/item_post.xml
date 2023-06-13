@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="mochi"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView

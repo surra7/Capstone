@@ -51,7 +51,7 @@
                     android:text="Name"
                     android:layout_marginStart="15dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     app:layout_collapseMode="parallax" />
 
                 <TextView
@@ -61,7 +61,7 @@
                     android:text="Place"
                     android:layout_marginStart="20dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_collapseMode="parallax" />
                 </LinearLayout>
 
@@ -81,7 +81,7 @@
                         android:layout_marginStart="15dp"
                         android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_collapseMode="parallax" />
 
                     <TextView
@@ -91,7 +91,7 @@
                         android:layout_marginStart="10dp"
                         android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_collapseMode="parallax" />
 
                 </LinearLayout>
@@ -112,7 +112,7 @@
                         android:layout_marginEnd="10dp"
                         android:text="start"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_collapseMode="parallax" />
 
                     <TextView
@@ -121,7 +121,7 @@
                         android:layout_marginEnd="10dp"
                         android:text="-"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_collapseMode="parallax" />
 
                     <TextView
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:text="end"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_collapseMode="parallax" />
 
                 </LinearLayout>

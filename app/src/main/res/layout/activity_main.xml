@@ -31,25 +31,22 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"/>-->
 
-    <androidx.appcompat.widget.Toolbar
+    <RelativeLayout
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:padding="5dp"
+        android:gravity="center"
         android:layout_alignParentTop="true"
         android:background="@color/white">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                android:layout_centerHorizontal="true" />
 
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/title_division"

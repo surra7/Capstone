@@ -157,11 +157,11 @@ class AddNewPost : AppCompatActivity() {
             storageRef.putFile(uri!!) //성공시
                 .addOnSuccessListener {
                     /*progressDialog.dismiss() //업로드 진행 Dialog 상자 닫기*/
-                    Toast.makeText(applicationContext, "업로드 완료!", Toast.LENGTH_SHORT).show()
+                    /*Toast.makeText(applicationContext, "업로드 완료!", Toast.LENGTH_SHORT).show()*/
                 } //실패시
                 .addOnFailureListener {
                     /*progressDialog.dismiss()*/
-                    Toast.makeText(applicationContext, "업로드 실패!", Toast.LENGTH_SHORT).show()
+                    /*Toast.makeText(applicationContext, "업로드 실패!", Toast.LENGTH_SHORT).show()*/
                 } //진행중
                 /*.addOnProgressListener { taskSnapshot ->
                     val progress//이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?

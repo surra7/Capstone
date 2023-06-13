@@ -133,7 +133,6 @@
                 android:id="@+id/toolbar_division1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/my_toolbar"
                 android:background="@color/colorDivision"
                 android:orientation="horizontal" />
 
@@ -145,13 +144,13 @@
                 android:text="Friends"
                 android:textColor="@color/black" />-->
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/toolbar_division2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/my_toolbar"
                 android:background="@color/colorDivision"
-                android:orientation="horizontal" />
+                android:orientation="horizontal" />-->
 
             <Button
                 android:id="@+id/myPost_btn"
@@ -165,7 +164,6 @@
                 android:id="@+id/toolbar_division3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/my_toolbar"
                 android:background="@color/colorDivision"
                 android:orientation="horizontal" />
 
@@ -181,7 +179,6 @@
                 android:id="@+id/toolbar_division4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/my_toolbar"
                 android:background="@color/colorDivision"
                 android:orientation="horizontal" />
 

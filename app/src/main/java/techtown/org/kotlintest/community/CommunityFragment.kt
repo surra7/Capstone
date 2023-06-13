@@ -93,7 +93,7 @@ class CommunityFragment : Fragment() {
                 datas.clear()
 
                 datas.apply {
-                    add(
+                    /*add(
                         PostData(
                             Uid!!, "", "", "mochi", "subin", "If you want to try monja-yaki,\n" +
                                     "\ti really recommend here!\n" +
@@ -110,7 +110,7 @@ class CommunityFragment : Fragment() {
                                     "We are near of Sensoji Temple now\n" +
                                     "but can go anywhere if we go by walk.\n" +
                                     "It would be better\tif we can have beer or so.", "qqq.png", "2023/05/15 14:00", 20, 4, 6, arrayListOf()
-                        ))
+                        ))*/
                     datas.sortByDescending { it.cntHeart }
                     myAdapter.datas = datas
                     myAdapter.notifyDataSetChanged()

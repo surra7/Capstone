@@ -34,8 +34,6 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         Uid = arguments?.getString("uid")
 
-        Toast.makeText(context, "${Uid}", Toast.LENGTH_SHORT).show()
-
         val layoutManager = LinearLayoutManager(activity)
         binding.mainPostsRecycle.layoutManager = layoutManager
         myAdapter = MyPostAdapter(requireContext())

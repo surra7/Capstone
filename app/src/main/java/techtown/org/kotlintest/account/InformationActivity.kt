@@ -262,8 +262,8 @@ class InformationActivity : AppCompatActivity() {
         val storageRef = storage.getReferenceFromUrl("gs://test-b6cf3.appspot.com")
         var downloadReference = storageRef.child("files").child(fileName)
         val destinationPath = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)
-        val localFile = File.createTempFile("jpeg",".jpeg",destinationPath)
-        /*val localFile = File(context.filesDir, fileName)*/
+        /*val localFile = File.createTempFile("jpeg",".jpeg",destinationPath)*/
+        val localFile = File(context.filesDir, fileName)
         downloadReference.getFile(localFile).addOnSuccessListener {
             Toast.makeText(applicationContext, "download Success!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener{
