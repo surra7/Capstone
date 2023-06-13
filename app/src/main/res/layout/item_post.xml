@@ -6,8 +6,7 @@
     android:background="@drawable/home_plan_box_background"
     android:layout_marginTop="10dp"
     android:layout_marginStart="10dp"
-    android:layout_marginEnd="5dp"
-    android:padding="10dp">
+        android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"

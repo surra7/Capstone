@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical">
 
             <!--<Space
@@ -35,7 +35,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="390dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="390dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
@@ -81,7 +81,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="390dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
@@ -108,7 +108,7 @@
                 android:id="@+id/main_posts_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

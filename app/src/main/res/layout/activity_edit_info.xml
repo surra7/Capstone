@@ -7,67 +7,72 @@
     tools:context=".account.EditInformation"
     tools:ignore="SpeakableTextPresentCheck">
 
-    <TableLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
         android:id="@id/logo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/signup_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:paddingBottom="20dp"
+            android:text="| Edit Member Information"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@id/profileView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:paddingLeft="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_add_picture"
+            app:civ_border_color="@color/gray"
+            app:civ_border_overlay="true"
+            app:civ_border_width="5dp" />
 
 
-        <Space
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <Button
+            android:id="@id/gallery_btn"
             android:layout_width="wrap_content"
-            android:layout_height="30dp" />
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:text="| Edit Member Information"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:paddingLeft="30dp"
-                android:paddingBottom="30dp"
-                android:textColor="@color/black"/>
-        </TableRow>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="gallery"
+            android:textColor="@color/black" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@id/newPic_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="take new pic"
+            android:textColor="@color/black" />
+        </LinearLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/profileView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:paddingLeft="150dp"
-                android:src="@drawable/ic_add_picture"
-                app:civ_border_color="@color/gray"
-                app:civ_border_overlay="true"
-                app:civ_border_width="5dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@id/gallery_btn"
-                android:background="@android:color/transparent"
-                android:text="gallery"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@id/newPic_btn"
-                android:background="@android:color/transparent"
-                android:text="take new pic"
-                android:textColor="@color/black" />
-
-        </TableRow>
-
-    </TableLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@id/signup_layout"
@@ -129,8 +134,9 @@
                 android:id="@id/passwordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:hint=""
-                android:autofillHints="" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +149,8 @@
                 android:id="@+id/passwordCheckEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="password_check" />
+                android:hint="password_check"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

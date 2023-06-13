@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -74,6 +75,12 @@ class EditInformation : AppCompatActivity() {
         mDbRef = Firebase.database.reference
         // 저장소 초기화
         storage = Firebase.storage
+
+        setSupportActionBar(binding.topBar)
+        //툴바에 타이틀 없애기
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.topBar.title = "Edit Information"
 
         // 갤러리 버튼
         binding.galleryBtn.setOnClickListener{
@@ -313,5 +320,18 @@ class EditInformation : AppCompatActivity() {
             "" //오류 뜰경우 stirng은 blank값임
         }
         return digest
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val intent = intent
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                return true
+            }
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

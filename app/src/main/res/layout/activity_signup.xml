@@ -7,67 +7,60 @@
     tools:context=".SignupActivity"
     tools:ignore="SpeakableTextPresentCheck">
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/logo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/signup_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Space
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/logo_title" />
 
-        <TableRow
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_picture"
+            app:civ_border_color="@color/gray"
+            app:civ_border_overlay="true"
+            app:civ_border_width="5dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:paddingLeft="150dp"
-                android:src="@drawable/logo_title" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:paddingLeft="150dp"
-                android:src="@drawable/ic_add_picture"
-                app:civ_border_color="@color/gray"
-                app:civ_border_overlay="true"
-                app:civ_border_width="5dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/gallery_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:text="gallery"
                 android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/newPic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:text="take new pic"
                 android:textColor="@color/black" />
+        </LinearLayout>
 
-        </TableRow>
-
-    </TableLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/signup_layout"
@@ -129,8 +122,9 @@
                 android:id="@+id/passwordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:hint="password"
-                android:autofillHints="" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +137,8 @@
                 android:id="@+id/passwordCheckEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="password_check" />
+                android:hint="password_check"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

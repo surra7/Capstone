@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="recommend place"
         android:layout_marginStart="20dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/white" />
 
 </LinearLayout>

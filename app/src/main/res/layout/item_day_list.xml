@@ -29,22 +29,22 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="Day"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_Day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@{mySchedule.scheduleDay}"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/Day"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_Day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@{mySchedule.scheduleDay}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/Day"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
@@ -52,9 +52,9 @@
             android:id="@+id/schedule_recycle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
-            android:layout_marginTop="5dp"
             android:paddingBottom="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
