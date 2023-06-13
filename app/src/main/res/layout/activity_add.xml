@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="day"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="20dp"
         android:textColor="@color/black"/>
 
@@ -40,6 +40,7 @@
 
     <LinearLayout
         android:id="@+id/day_btn"
+        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
@@ -49,8 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Place Name"
-        android:textSize="18sp"
-        android:padding="20dp"
+        android:textSize="16sp"
+        android:padding="18dp"
         android:textColor="@color/black"/>
 
     <EditText
@@ -66,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Time"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="20dp"
         android:textColor="@color/black"/>
 
@@ -94,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="20dp"
         android:textColor="@color/black"/>
 
@@ -126,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Memo"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="20dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"/>
@@ -146,7 +147,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:text="Apply"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"/>
 
