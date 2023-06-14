@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="400dp"
-    android:layout_height="280dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:layout_margin="10dp"
     tools:context=".mySchedule.UpdateSuppliesActivity">
 
     <Button
         android:id="@+id/checkedBaggage"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        app:layout_constraintHorizontal_weight="1"
         android:text="Checked Baggage"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
+        android:padding="10dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,20 +24,21 @@
 
     <Button
         android:id="@+id/carryOnBaggage"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        app:layout_constraintHorizontal_weight="1"
         android:text="Carry-on Baggage"
+        android:padding="10dp"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="15dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/checkedBaggage"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/etSuppliesContent"
-        android:layout_width="360dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="Add Supplies"
         app:layout_constraintTop_toBottomOf="@id/checkedBaggage"
@@ -42,20 +46,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="start|top"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:inputType="textMultiLine"
         android:singleLine="false" />
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="360dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_alignParentBottom="true"
         android:text="Apply"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:layout_marginBottom="30dp"
         android:background="@color/colorPrimary"

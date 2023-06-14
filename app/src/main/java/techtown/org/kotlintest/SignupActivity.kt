@@ -59,10 +59,10 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        setSupportActionBar(binding.topBar)
-//        //툴바에 타이틀 없애기
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setSupportActionBar(binding.topBar)
+        //툴바에 타이틀 없애기
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // 인증 초기화
         mAuth = Firebase.auth

@@ -54,6 +54,7 @@ class DetailPost : AppCompatActivity() {
     lateinit var name: String
     lateinit var id: String
     lateinit var context: String
+    lateinit var location: String
     lateinit var time: String
     var heart: Int = 0
     var comment: Int = 0
@@ -62,7 +63,7 @@ class DetailPost : AppCompatActivity() {
 
     var myHeart: String = ""
     var myBookmark: String = ""
-    var myname: String = ""
+    var myId: String = ""
 
     /*lateinit var sLocation: String
     var latitude: Double = 0.0
@@ -114,6 +115,7 @@ class DetailPost : AppCompatActivity() {
             name = intent.getStringExtra("name")!!
             id = intent.getStringExtra("id")!!
             context = intent.getStringExtra("context")!!
+            location = intent.getStringExtra("location")!!
             time = intent.getStringExtra("time")!!
             heart = intent.getIntExtra("heart", 0)!!
             comment = intent.getIntExtra("comment", 0)!!
@@ -124,6 +126,7 @@ class DetailPost : AppCompatActivity() {
             binding.userName.setText(name)
             binding.userId.setText(id)
             binding.postContext.setText(context)
+            binding.addLocation.setText(location)
             binding.postTime.setText(time)
             binding.cntHeart.setText(heart.toString())
             binding.cntComment.setText(comment.toString())
@@ -149,8 +152,8 @@ class DetailPost : AppCompatActivity() {
             }
         }
 
-        mDbRef.child(myUid).child("nickname").get().addOnSuccessListener {
-            myname = it.getValue().toString()
+        mDbRef.child(myUid).child("id").get().addOnSuccessListener {
+            myId = it.getValue().toString()
         }
 
         mDbRef.child(myUid).child("heartList").child(key).get().addOnSuccessListener {
@@ -256,7 +259,7 @@ class DetailPost : AppCompatActivity() {
             val uComment = binding.editComment.text.toString()
 
             if (uComment.isEmpty() == false) {
-                val comments = CommentData(myUid, "", key, myname, uComment)
+                val comments = CommentData(myUid, "", key, myId, uComment)
 
                 dao2.add(key, comments)?.addOnSuccessListener {
                     Toast.makeText(this, "Add SUCCESS", Toast.LENGTH_SHORT).show()

@@ -79,6 +79,18 @@ class CommunityFragment : Fragment() {
 
         getPostList()
 
+        binding.btnNewHotPost.isSelected = true
+
+        binding.btnNewHotPost.setOnClickListener {
+            binding.btnNewHotPost.isSelected = !binding.btnNewHotPost.isSelected
+            getPostList()
+        }
+
+        binding.btnLatestPost.setOnClickListener {
+            binding.btnLatestPost.isSelected = !binding.btnLatestPost.isSelected
+            getPostList2()
+        }
+
         binding.searchPosts.setOnClickListener{
             val intent = Intent(context, SearchPost::class.java)
             startActivity(intent)
@@ -132,6 +144,44 @@ class CommunityFragment : Fragment() {
                     if (postList != null) {
                         datas.add(postList)
                         datas.sortByDescending { it.cntHeart }
+                    }
+                }
+                myAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun getPostList2() {
+        dao.getPostList()?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                datas.clear()
+
+                datas.apply {
+                    datas.sortByDescending { it.postTime }
+                    myAdapter.datas = datas
+                    myAdapter.notifyDataSetChanged()
+                }
+
+                //snapshot.children으로 dataSnapshot에 데이터 넣기
+                for (dataSnapshot in snapshot.children) {
+                    //담긴 데이터를 ScheduleData 클래스 타입으로 바꿈
+                    val postList = dataSnapshot.getValue(PostData::class.java)
+                    //키 값 가져오기
+                    val key = dataSnapshot.key
+                    //schedule 정보에 키 값 담기
+                    postList?.key = key.toString()
+
+                    if (postList != null) {
+                        postDB.child(postList.key).child("key").setValue(key.toString())
+                    }
+
+                    if (postList != null) {
+                        datas.add(postList)
+                        datas.sortByDescending { it.postTime }
                     }
                 }
                 //데이터 적용

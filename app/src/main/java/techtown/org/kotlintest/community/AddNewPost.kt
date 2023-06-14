@@ -25,6 +25,7 @@ import techtown.org.kotlintest.GalleryAdapter
 import techtown.org.kotlintest.databinding.ActivityAdd2Binding
 import techtown.org.kotlintest.databinding.ActivityAddCountryBinding
 import techtown.org.kotlintest.databinding.ActivityAddNewPostBinding
+import techtown.org.kotlintest.mySchedule.MapsActivity
 import techtown.org.kotlintest.mySchedule.ScheduleDao
 import techtown.org.kotlintest.mySchedule.ScheduleData
 import java.text.SimpleDateFormat
@@ -40,6 +41,10 @@ class AddNewPost : AppCompatActivity() {
     lateinit var id: String
     lateinit var postkey: String
     var postimg = arrayListOf<String>()
+
+    lateinit var location: String
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
 
     var storage = Firebase.storage
 
@@ -94,6 +99,13 @@ class AddNewPost : AppCompatActivity() {
         val posttime: String = formatte.format(java.util.Date())
         postkey = posttime + Uid
 
+        location = ""
+        binding.addLocation.setOnClickListener{
+            /*val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)*/
+            openActivityForResult()
+        }
+
         binding.addNewPost.setOnClickListener{
             val context = binding.postContext.text.toString()
 
@@ -101,7 +113,7 @@ class AddNewPost : AppCompatActivity() {
                 uploadFile(imageList[i], i)
             }
 
-            val post = PostData(Uid, "", postkey, name, id, context, "", postTime, 0, 0, 0, postimg)
+            val post = PostData(Uid, "", postkey, name, id, context, location, postTime, 0, 0, 0, postimg)
 
             dao.add(post)?.addOnSuccessListener {
                 Toast.makeText(this, "Add SUCCESS", Toast.LENGTH_SHORT).show()
@@ -113,6 +125,24 @@ class AddNewPost : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+    }
+
+    fun openActivityForResult() {
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivityForResult(intent, 123)
+    }
+
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && requestCode == 123) {
+            location = data?.getStringExtra("location")!!
+            latitude = data.getDoubleExtra("latitude", 0.0)!!
+            longitude = data.getDoubleExtra("longitude", 0.0)!!
+            Toast.makeText(this, "${location}", Toast.LENGTH_SHORT).show()
+            binding.addLocation.text= location
+        }
+
     }
 
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(

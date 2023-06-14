@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
     var datas = arrayListOf<PostData>()
 
     var Uid : String? = null
+    var cnt: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

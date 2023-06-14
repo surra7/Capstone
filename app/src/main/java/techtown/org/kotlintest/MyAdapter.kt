@@ -227,7 +227,7 @@ class MyPostAdapter() : RecyclerView.Adapter<MyPostAdapter.ViewHolder>(){
             intent.putExtra("name", post.userName)
             intent.putExtra("id", post.userId)
             intent.putExtra("context", post.postContext)
-            intent.putExtra("uri", post.profileUri)
+            intent.putExtra("location", post.location)
             intent.putExtra("time", post.postTime)
             intent.putExtra("heart", post.cntHeart)
             intent.putExtra("comment", post.cntComment)
@@ -313,7 +313,6 @@ class MySearchPostAdapter(private val context: SearchPost) : RecyclerView.Adapte
             intent.putExtra("name", post.userName)
             intent.putExtra("id", post.userId)
             intent.putExtra("context", post.postContext)
-            intent.putExtra("uri", post.profileUri)
             intent.putExtra("time", post.postTime)
             intent.putExtra("heart", post.cntHeart)
             intent.putExtra("comment", post.cntComment)
@@ -580,12 +579,8 @@ class MyTodoAdapter(private val context: TodoList) :
         /*val binding=(holder as MyViewHolder).binding
         binding.itemData.text= datas!![position]*/
 
-        /*val Todo: TodoData = datas[position]*/
         val item = datas[position]
         holder.bind(item)
-
-        /*holder.txtTodo.text = Todo.todo
-        holder.checkBox.isChecked = Todo.isChecked*/
 
         val seqCheckBox = holder.itemView.findViewById<CheckBox>(R.id.checkBox)
         seqCheckBox.setOnCheckedChangeListener(null)
@@ -817,7 +812,7 @@ class CommentAdapter(private val context: DetailPost) :
 
         val comment: CommentData = datas[position]
 
-        holder.txtUserName.text = comment.userName
+        holder.txtUserId.text = comment.userId
         holder.txtComment.text = comment.comment
 
         val delete = holder.itemView.findViewById<ImageButton>(R.id.comment_delete)
@@ -833,7 +828,7 @@ class CommentAdapter(private val context: DetailPost) :
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        val txtUserName: TextView = itemView.findViewById(R.id.userName)
+        val txtUserId: TextView = itemView.findViewById(R.id.userName)
         val txtComment: TextView = itemView.findViewById(R.id.comment)
 
         /*fun bind(item: TravelData) {

@@ -102,7 +102,7 @@ class UpdateActivity : AppCompatActivity() {
                     btnAction(id)
                 }
                 this.layoutParams = layoutParams
-                layoutParams.setMargins(changeDP(10), changeDP(10), changeDP(10), 10)
+                layoutParams.setMargins(changeDP(5), changeDP(5), changeDP(5), 10)
             }
             buttonview.addView(dynamicDayButton)
         }
