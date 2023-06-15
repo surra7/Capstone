@@ -1376,7 +1376,7 @@ class mySchedule : AppCompatActivity()
                     if (!recommendList.contains(recommend)){ recommendList.add(recommend) }
                 }
             }
-            if (sPlace == "Boracay"){
+            if (sPlace == "Chiang Mai"){
                 if (sTravelWhom.contains("Alone")){
                     recommend = ScheduleData(Uid, sKey, "", "0", "Doi Suthep", "", "", "Suthep, Mueang Chiang Mai District, Chiang Mai 50200 Thailand", 18.817524822597438, 98.89220151105559, diffDay)
                     if (!recommendList.contains(recommend)){ recommendList.add(recommend) }
@@ -1540,7 +1540,7 @@ class mySchedule : AppCompatActivity()
                     if (!recommendList.contains(recommend)){ recommendList.add(recommend) }
                 }
             }
-            if (sPlace == "Kuala Lumpur"){
+            if (sPlace == "Phu Quoc"){
                 if (sTravelWhom.contains("Alone")){
                     recommend = ScheduleData(Uid, sKey, "", "0", "Bai Truong", "", "", "Đường Trần Hưng Đạo, Dương Tơ, Phú Quốc, Kiên Giang 92500 Vietnam", 10.18161920739451, 103.96694273435789, diffDay)
                     if (!recommendList.contains(recommend)){ recommendList.add(recommend) }

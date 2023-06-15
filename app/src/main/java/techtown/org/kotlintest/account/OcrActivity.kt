@@ -7,27 +7,19 @@ import com.googlecode.tesseract.android.TessBaseAPI
 
 import android.os.Bundle
 
-import android.widget.TextView
-
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import techtown.org.kotlintest.R
-import techtown.org.kotlintest.User
-import techtown.org.kotlintest.community.PostData
 import techtown.org.kotlintest.databinding.ActivityOcrtestBinding
-import techtown.org.kotlintest.mySchedule.TodoData
 import java.io.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -78,7 +70,7 @@ class OcrActivity : AppCompatActivity() {
 
         //이미지 디코딩을 위한 초기화
         //image = imageUri as Bitmap
-        image = BitmapFactory.decodeResource(resources, R.drawable.samplepassport) //샘플이미지파일
+        image = BitmapFactory.decodeResource(resources, R.drawable.sampleimg) //샘플이미지파일
 
         //val imageView: ImageView = findViewById(R.id.imageView)
         //imageView.setImageBitmap(image)
