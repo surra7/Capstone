@@ -768,22 +768,6 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
         Glide.with(context)
             .load(imageList[position])
             .into(holder.imageView)
-
-        /*holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, mySchedule::class.java)
-            intent.putExtra("uid", travel.Uid)
-            intent.putExtra("key", travel.travelKey)
-            intent.putExtra("name", travel.name)
-            intent.putExtra("place", travel.place)
-            intent.putExtra("sDate", travel.sDate)
-            intent.putExtra("eDate", travel.eDate)
-            intent.putExtra("diffDay", travel.diffDay)
-            intent.putExtra("travelWhom", travel.travelWhom)
-            intent.putExtra("travelStyle", travel.travelStyle)
-            intent.putExtra("flags", travel.flags)
-
-            ContextCompat.startActivity(holder.itemView.context, intent, null)
-        }*/
     }
 
     override fun getItemCount(): Int {

@@ -68,6 +68,7 @@ class AddNewPost : AppCompatActivity() {
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             activityResult.launch(intent)
+            /*startActivityForResult(intent, 321)*/
         }
 
         val dao = PostDao()
@@ -127,14 +128,33 @@ class AddNewPost : AppCompatActivity() {
         }
     }
 
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == RESULT_OK){
+            //멀티 선택은 clipData
+            if (it.data!!.clipData != null){
+                val count = it.data!!.clipData!!.itemCount
+
+                for (index in 0 until count){
+                    val imageUri = it.data!!.clipData!!.getItemAt(index).uri
+                    imageList.add(imageUri)
+                }
+            } else{ //싱글 이미지
+                val imageUri = it.data!!.data
+                imageList.add(imageUri!!)
+            }
+            galleryAdapter.notifyDataSetChanged()
+        }
+    }
+
     fun openActivityForResult() {
         val intent = Intent(this, MapsActivity::class.java)
         startActivityForResult(intent, 123)
     }
 
     @Deprecated("Deprecated in Java")
-    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == 123) {
             location = data?.getStringExtra("location")!!
             latitude = data.getDoubleExtra("latitude", 0.0)!!
@@ -143,25 +163,6 @@ class AddNewPost : AppCompatActivity() {
             binding.addLocation.text= location
         }
 
-    }
-
-    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){
-            if (it.resultCode == RESULT_OK){
-                //멀티 선택은 clipData
-                if (it.data!!.clipData != null){
-                    val count = it.data!!.clipData!!.itemCount
-
-                    for (index in 0 until count){
-                        val imageUri = it.data!!.clipData!!.getItemAt(index).uri
-                        imageList.add(imageUri)
-                    }
-                } else{ //싱글 이미지
-                    val imageUri = it.data!!.data
-                    imageList.add(imageUri!!)
-                }
-                galleryAdapter.notifyDataSetChanged()
-            }
     }
 
     @SuppressLint("SimpleDateFormat")

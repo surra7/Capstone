@@ -152,6 +152,10 @@ class DetailPost : AppCompatActivity() {
             }
         }
 
+        if (location == ""){
+            binding.icLocation.isVisible = false
+        }
+
         mDbRef.child(myUid).child("id").get().addOnSuccessListener {
             myId = it.getValue().toString()
         }
@@ -281,7 +285,6 @@ class DetailPost : AppCompatActivity() {
                 comment -= 1
                 postDB.child(key).child("cntComment").setValue(comment)
                 binding.cntComment.setText(comment.toString())
-                Toast.makeText(this@DetailPost, "${commentKey}", Toast.LENGTH_SHORT).show()
             }
         })
 
