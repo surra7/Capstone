@@ -3,22 +3,27 @@ package techtown.org.kotlintest.account
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import com.googlecode.tesseract.android.TessBaseAPI
-
-import android.os.Bundle
-
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Bundle
+import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.view.MenuItem
 import android.widget.Toast
-
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.googlecode.tesseract.android.TessBaseAPI
 import techtown.org.kotlintest.R
+import techtown.org.kotlintest.SignupActivity
 import techtown.org.kotlintest.databinding.ActivityOcrtestBinding
 import java.io.*
 import java.security.MessageDigest
@@ -37,6 +42,7 @@ class OcrActivity : AppCompatActivity() {
     private lateinit var mDbRef: DatabaseReference
 
     companion object {
+        lateinit var uri: Any // 이미지
         lateinit var SECRET_KEY: String// 암호화
         /* 업로드할 여권 데이터 */
         lateinit var type: String
@@ -45,12 +51,12 @@ class OcrActivity : AppCompatActivity() {
         lateinit var surname: String
         lateinit var givenName: String
         //var nameInKorean: String
-        lateinit var dateOfBirth: String
+        var dateOfBirth: Int = 0
         lateinit var sex: String
         //var nationality: String
         //var authority: String
-        lateinit var dateOfIssue: String
-        lateinit var dateOfExpiry: String
+        var dateOfIssue: Int = 0
+        var dateOfExpiry: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,28 +72,127 @@ class OcrActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         /*binding.topBar.title = "Information"*/
+        image = BitmapFactory.decodeResource(resources, R.drawable.samplepassport) //샘플이미지파일
 
+        // 갤러리 버튼
+        binding.getPassportPicBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            activityResult.launch(intent)
 
-        //이미지 디코딩을 위한 초기화
-        //image = imageUri as Bitmap
-        image = BitmapFactory.decodeResource(resources, R.drawable.sampleimg) //샘플이미지파일
+            //이미지 디코딩을 위한 초기화
+            //image = MediaStore.Images.Media.getBitmap(application.contentResolver, uri as Uri?)
 
-        //val imageView: ImageView = findViewById(R.id.imageView)
-        //imageView.setImageBitmap(image)
-        //언어파일 경로
-        datapath = "$filesDir/tesseract/"
+        }
+        binding.doOcrBtn.setOnClickListener {
+            //val imageView: ImageView = findViewById(R.id.imageView)
+            //imageView.setImageBitmap(image)
+            //언어파일 경로
+            datapath = "$filesDir/tesseract/"
 
-        //트레이닝데이터가 카피되어 있는지 체크
-        checkFile(File(datapath + "tessdata/"))
+            //트레이닝데이터가 카피되어 있는지 체크
+            checkFile(File(datapath + "tessdata/"))
 
-        //Tesseract API 언어 세팅
-        val lang = "eng"
+            //Tesseract API 언어 세팅
+            val lang = "eng"
 
-        //OCR 세팅
-        mTess = TessBaseAPI()
-        mTess!!.init(datapath, lang)
+            //OCR 세팅
+            mTess = TessBaseAPI()
+            mTess!!.init(datapath, lang)
 
-        OCR()
+            OCR()
+        }
+
+        binding.typeEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                type = binding.typeEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                type = binding.typeEdit.text.toString().trim()
+            }
+        })
+        binding.countryCodeEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                countryCode = binding.countryCodeEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                countryCode = binding.countryCodeEdit.text.toString().trim()
+            }
+        })
+        binding.passportNoEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                passportNo = binding.passportNoEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                passportNo = binding.passportNoEdit.text.toString().trim()
+            }
+        })
+        binding.surnameEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                surname = binding.surnameEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                surname = binding.surnameEdit.text.toString().trim()
+            }
+        })
+        binding.givenNameEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                givenName = binding.givenNameEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                givenName = binding.givenNameEdit.text.toString().trim()
+            }
+        })
+        binding.sexEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                sex = binding.sexEdit.text.toString().trim()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                sex = binding.sexEdit.text.toString().trim()
+            }
+        })
+        binding.dateOfBirthEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                dateOfBirth = binding.dateOfBirthEdit.text.toString().trim().toInt()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateOfBirth = binding.dateOfBirthEdit.text.toString().trim().toInt()
+            }
+        })
+        binding.dateOfIssueEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                dateOfIssue = binding.dateOfIssueEdit.text.toString().trim().toInt()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateOfIssue = binding.dateOfIssueEdit.text.toString().trim().toInt()
+            }
+        })
+        binding.dateOfExpiryEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                dateOfExpiry = binding.dateOfExpiryEdit.text.toString().trim().toInt()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                dateOfExpiry = binding.dateOfExpiryEdit.text.toString().trim().toInt()
+            }
+        })
 
         binding.saveOcrBtn.setOnClickListener {
             val keyString = binding.safeKeyString.text.toString().trim()
@@ -108,8 +213,20 @@ class OcrActivity : AppCompatActivity() {
         }
     }
 
+    // 갤러리 작동
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode== RESULT_OK && it.data != null) {
+            uri = it.data!!.data!!
+            Glide.with(this)
+                .load(uri)
+                .into(binding.passportImgView)
+            image = uri as Bitmap
+        }
+    }
+
     // 비밀번호 SHA-256 Hashing
-    fun getHash(str: String): String {
+    private fun getHash(str: String): String {
         var digest: String = ""
         digest = try {
             //암호화
@@ -150,7 +267,6 @@ class OcrActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     fun OCR() {
         var OCRresult: String? = null
-
         mTess!!.setImage(image)
         OCRresult = mTess!!.utF8Text // ocr된 문자열
         var length = OCRresult.length
@@ -167,10 +283,10 @@ class OcrActivity : AppCompatActivity() {
         surname = tempString.substringBefore("<")
         givenName = tempString.substring(5).filter {it.isLetter()}
         passportNo = secondString.slice(0 until 9)
-        dateOfBirth = secondString.slice(13 until 19)
+        dateOfBirth = secondString.slice(13 until 19).toInt()
         sex = secondString.slice(20 until 21)
-        dateOfExpiry = secondString.slice(21 until 27)
-        dateOfIssue = dateOfExpiry.drop(27)
+        dateOfExpiry = secondString.slice(21 until 27).toInt()
+        dateOfIssue = dateOfExpiry - 100000
 
         //show ocred data
         val inputFormat = SimpleDateFormat("yyMMdd")
@@ -182,16 +298,16 @@ class OcrActivity : AppCompatActivity() {
         binding.passportNoEdit.hint = passportNo
         binding.sexEdit.hint = sex
 
-        binding.dateOfBirthEdit.hint = dateOfBirth
-        binding.dateOfIssueEdit.hint = dateOfIssue
-        binding.dateOfExpiryEdit.hint = dateOfExpiry
+        binding.dateOfBirthEdit.hint = dateOfBirth.toString()
+        binding.dateOfIssueEdit.hint = dateOfIssue.toString()
+        binding.dateOfExpiryEdit.hint = dateOfExpiry.toString()
 
-        /*val birthDate = inputFormat.parse(dateOfBirth.toString())
+        val birthDate = inputFormat.parse(dateOfBirth.toString())
         val issueDate = inputFormat.parse(dateOfIssue.toString())
         val expiryDate = inputFormat.parse(dateOfExpiry.toString())
         binding.dateOfBirthEdit.hint = outputFormat.format(birthDate)
         binding.dateOfIssueEdit.hint = outputFormat.format(issueDate)
-        binding.dateOfExpiryEdit.hint = outputFormat.format(expiryDate)*/
+        binding.dateOfExpiryEdit.hint = outputFormat.format(expiryDate)
     }
 
     /***

@@ -224,7 +224,8 @@ class SignupActivity : AppCompatActivity() {
             val password = binding.passwordEdit.text.toString().trim()
             val id = binding.idEdit.text.toString().trim()
             val nickname = binding.nicknameEdit.text.toString().trim()
-            val profilePicUri = getImageUri(this, uri as Bitmap)
+            /*val profilePicUri = getImageUri(this, uri as Bitmap)*/
+            val profilePicUri = uri as Uri
             signUp(email, password, id, nickname, profilePicUri!!)
         }
     }
@@ -324,7 +325,7 @@ class SignupActivity : AppCompatActivity() {
     // DB 저장
     private fun addUserToDatabase(email: String, uId: String, id: String, nickname: String, passwordHashed: String, profilePicUri: String){
         mDbRef.child("user").child(uId).setValue(User(email, uId, id, nickname, passwordHashed, profilePicUri, arrayListOf(), arrayListOf()))
-        mDbRef.child("passport").child(uId).setValue(OcrData(0,"", "", "Privated", "", "", "", "", "", "",""))
+        mDbRef.child("passport").child(uId).setValue(OcrData(0,"", "", "Privated", "", "", "", 0, "", 0,0))
     }
 
     // 비밀번호 SHA-256 Hashing

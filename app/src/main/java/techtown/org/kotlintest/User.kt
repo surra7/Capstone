@@ -1,7 +1,5 @@
 package techtown.org.kotlintest
 
-import android.net.Uri
-
 data class User(
     var email: String,
     var uId: String,

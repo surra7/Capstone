@@ -8,10 +8,10 @@ data class OcrData(
     var hashedSecretKey: String,
     var surname: String,
     var givenName: String,
-    var dateOfBirth: String,
+    var dateOfBirth: Int,
     var sex: String,
-    var dateOfIssue: String,
-    var dateOfExpiry: String,
+    var dateOfIssue: Int,
+    var dateOfExpiry: Int,
 ){
-    constructor(): this(0, "", "", "", "", "", "", "", "", "","")
+    constructor(): this(0, "", "", "", "", "", "", 0, "", 0, 0)
 }

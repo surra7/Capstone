@@ -31,12 +31,22 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/samplepassport"/>
     <Button
-        android:id="@+id/take_passport_img_btn"
+        android:id="@+id/get_passport_pic_btn"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:background="@color/white"
         android:text="Get Pic"
+        android:textSize="10dp"
+        android:textColor="@color/black"/>
+    <Button
+        android:id="@+id/do_ocr_btn"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:text="Run OCR"
         android:textSize="10dp"
         android:textColor="@color/black"/>
 
@@ -150,6 +160,7 @@
                 android:id="@+id/givenNameEdit"
                 android:layout_width="150dp"
                 android:layout_height="45dp"
+                android:textSize="13dp"
                 android:layout_marginLeft="10dp"/>
 
         </LinearLayout>
