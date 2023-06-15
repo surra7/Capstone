@@ -8,6 +8,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +23,9 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -29,7 +33,9 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import techtown.org.kotlintest.FileAdapter
+import techtown.org.kotlintest.R
 import techtown.org.kotlintest.SignupActivity
 import techtown.org.kotlintest.community.CommentData
 import techtown.org.kotlintest.databinding.ActivityInformationBinding
@@ -147,6 +153,75 @@ class InformationActivity : AppCompatActivity() {
                 downloadFile(fileName)
             }
         })
+
+        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean{
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //해당 위치 값 변수에 담기
+                val position = viewHolder.bindingAdapterPosition
+                val storage = FirebaseStorage.getInstance()
+
+                when(direction){
+                    ItemTouchHelper.LEFT -> {
+                        val key = datas[position].key
+                        val fileName = datas[position].fileName
+
+                        dao.fileDelete(uId, key).addOnSuccessListener {
+                            Toast.makeText(applicationContext, "Delete Success", Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener{
+                            Toast.makeText(applicationContext, "Delete Fail: ${it.message}", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        val storageRef = storage.getReferenceFromUrl("gs://test-b6cf3.appspot.com/").child("files").child(uId).child(fileName)
+
+                        storageRef.delete() //성공시
+                            .addOnSuccessListener {
+                                Toast.makeText(applicationContext, fileName, Toast.LENGTH_SHORT).show()
+                            } //실패시
+                            .addOnFailureListener {
+                                Toast.makeText(applicationContext, "No Such file!", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                //스와이프 꾸미기
+                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder,
+                    dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(Color.RED)
+                    .addSwipeLeftActionIcon(R.drawable.ic_delete)
+                    .addSwipeLeftLabel("Delete")
+                    .create()
+                    .decorate()
+
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+        }).attachToRecyclerView(binding.fileRecycle)
 
         getFileList()
     }

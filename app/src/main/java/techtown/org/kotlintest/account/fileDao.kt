@@ -25,11 +25,8 @@ class fileDao {
     }
 
     //삭제
-    fun filetDelete(uid: String, key: String): Task<Void> {
+    fun fileDelete(uid: String, key: String): Task<Void> {
         return databaseReference!!.child(uid).child(key).removeValue()
     }
 
-    fun commentAllDelete(postKey: String): Task<Void> {
-        return databaseReference!!.child(postKey).removeValue()
-    }
 }
