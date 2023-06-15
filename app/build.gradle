@@ -97,4 +97,7 @@ dependencies {
 
     //ocr
     implementation 'com.rmtheis:tess-two:9.1.0'
+
+    //ad
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
 }

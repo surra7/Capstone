@@ -82,8 +82,8 @@
 
         <ImageButton
             android:id="@+id/passportCamera_btn"
-            android:layout_width="370dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
@@ -92,14 +92,220 @@
             android:background="@android:color/transparent"
             android:scaleType="center"
             android:src="@drawable/ic_add_pic">
-
         </ImageButton>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+                <EditText
+                    android:id="@+id/keyStringCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type key letters for passport info" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/show_p_info_btn"
+                android:layout_width="70dp"
+                android:layout_height="55dp"
+                android:background="@color/white"
+                android:text="Done"
+                android:textSize="10dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Type"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/type">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Country Code"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/countryCode">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Passport No."
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/passportNo">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Surname"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/surname">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Given Name"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/givenName">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Sex"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/sex">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Date of Birth"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/dateOfBirth">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Date of Issue"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/dateOfIssue">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Date of Expiry"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/dateOfExpiry">
+            </TextView>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView24"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:padding="10dp"
             android:text="Files"
             android:textColor="@color/black"

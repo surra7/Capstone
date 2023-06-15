@@ -83,11 +83,21 @@ class CommunityFragment : Fragment() {
 
         binding.btnNewHotPost.setOnClickListener {
             binding.btnNewHotPost.isSelected = !binding.btnNewHotPost.isSelected
+            if (binding.btnNewHotPost.isSelected == true) {
+                binding.btnLatestPost.isSelected = false
+            } else {
+                binding.btnLatestPost.isSelected = true
+            }
             getPostList()
         }
 
         binding.btnLatestPost.setOnClickListener {
             binding.btnLatestPost.isSelected = !binding.btnLatestPost.isSelected
+            if (binding.btnLatestPost.isSelected == true) {
+                binding.btnNewHotPost.isSelected = false
+            } else{
+                binding.btnNewHotPost.isSelected = true
+            }
             getPostList2()
         }
 

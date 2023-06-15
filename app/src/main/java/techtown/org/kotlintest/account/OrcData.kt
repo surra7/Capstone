@@ -1,19 +1,17 @@
 package techtown.org.kotlintest.account
 
-data class OrcData(
-    var OCRresult: String?,
+data class OcrData(
+    var init: Int,
     var type: String,
     var countryCode: String,
     var passportNo: String, // 암호화 필요
+    var hashedSecretKey: String,
     var surname: String,
     var givenName: String,
-    var nameInKorean: String,
-    var dateOfBirth: Int,
+    var dateOfBirth: String,
     var sex: String,
-    var nationality: String,
-    var authority: String,
-    var dateOfIssue: Int,
-    var dateOfExpiry: Int,
+    var dateOfIssue: String,
+    var dateOfExpiry: String,
 ){
-    constructor(): this("", "","", "", "", "", "", 0, "", "", "", 0, 0)
+    constructor(): this(0, "", "", "", "", "", "", "", "", "","")
 }

@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import techtown.org.kotlintest.account.InformationActivity
 import techtown.org.kotlintest.community.PostDao
 import techtown.org.kotlintest.community.PostData
-import techtown.org.kotlintest.databinding.FragmentCommunityBinding
 import techtown.org.kotlintest.databinding.FragmentHomeBinding
 import techtown.org.kotlintest.myTravel.AddActivity2
 
@@ -28,12 +27,24 @@ class HomeFragment : Fragment() {
     var Uid : String? = null
     var cnt: Int = 0
 
+    private lateinit var mAdView: AdView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         Uid = arguments?.getString("uid")
+
+        MobileAds.initialize(requireContext())
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         val layoutManager = LinearLayoutManager(activity)
         binding.mainPostsRecycle.layoutManager = layoutManager

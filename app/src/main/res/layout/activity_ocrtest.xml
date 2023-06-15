@@ -11,62 +11,258 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="?attr/actionBarSize"/>
 
-    <RelativeLayout
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:text="Check OCRed Passport information"/>
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="#ffffff"
-        android:id="@+id/ImageContainer">
+        android:layout_height="150dp"
+        android:id="@+id/passportImgView"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/samplepassport"/>
+    <Button
+        android:id="@+id/take_passport_img_btn"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:text="Get Pic"
+        android:textSize="10dp"
+        android:textColor="@color/black"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:src="@drawable/samplepassport"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_below="@id/ImageContainer"
-        android:clickable="true"
-        android:onClick="processImage"
-        android:background="#166e78"
-        android:id="@+id/OCRButtonContainer">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RUN OCR"
-            android:textSize="18sp"
-            android:textColor="#ffffff"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:clickable="true"
-            android:onClick="processImage"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/OCRButtonContainer"
-        android:padding="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:text="Output results here"
-            android:id="@+id/OCRTextView"
-            android:textSize="15sp"
-            android:textColor="#169cdf"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="#fff"
-            />
-    </RelativeLayout>
+            android:layout_gravity="center">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/typeEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Country Code"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/countryCodeEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passport No."
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/passportNoEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surname"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/surnameEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Given Name"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/givenNameEdit"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sex"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/sexEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/dateOfBirthEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Issue"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/dateOfIssueEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Expiry"
+                android:textColor="@color/black"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/dateOfExpiryEdit"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:hint=""/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+        <EditText
+            android:id="@+id/safeKeyString"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type key letters to save these info safe." />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/save_ocr_btn"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:text="Done"
+        android:textSize="10dp"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
