@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".account.UserFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="209dp"
+            android:background="@drawable/profile_background">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="150dp"
+                    app:civ_border_color="@color/gray"
+                    app:civ_border_overlay="true"
+                    app:civ_border_width="3dp"
+                    android:src="@drawable/ic_profile_mochi" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/nicknameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
+                    android:gravity="center"
+                    android:text="mochi"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/idText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
+                    android:text="mochithelion"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="7.5pt" />
+
+                <ImageButton
+                    android:id="@+id/copyIdButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="left"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_copy"
+                    app:tint="@color/white" />
+
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <Button
+                android:id="@+id/info_btn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:text="Information"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/toolbar_division1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorDivision"
+                android:orientation="horizontal" />
+
+            <!--<Button
+                android:id="@+id/friends_btn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:text="Friends"
+                android:textColor="@color/black" />-->
+
+            <!--<LinearLayout
+                android:id="@+id/toolbar_division2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/my_toolbar"
+                android:background="@color/colorDivision"
+                android:orientation="horizontal" />-->
+
+            <Button
+                android:id="@+id/myPost_btn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:text="My Posts"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/toolbar_division3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorDivision"
+                android:orientation="horizontal" />
+
+            <Button
+                android:id="@+id/saved_btn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:text="Saved Posts"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/toolbar_division4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorDivision"
+                android:orientation="horizontal" />
+
+            <Button
+                android:id="@+id/liked_btn"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:text="Liked Posts"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/deleteAccount_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Delete Account"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/logOut_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Log Out"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
