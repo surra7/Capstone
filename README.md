@@ -44,14 +44,12 @@
 
 ## 화면
 
-<div>
-
 ### 로그인, 회원가입
 
 <img width="552" height="573" alt="Image" src="https://github.com/user-attachments/assets/ef687056-cd70-4c7e-9f63-87f7c1d99460" />
 
 
-### 여행 일정 관리
+### 여행 계획 추가
 
 <img width="30%" src="https://github.com/user-attachments/assets/b19948c5-388e-4add-8dc8-0a0c1f13350c" /> <img width="30%" src="https://github.com/user-attachments/assets/80ded40d-1eb3-4405-b6b1-0028ede2f905" /> <img width="30%" src="https://github.com/user-attachments/assets/1f7c2878-d9db-4741-a572-0c1e52a0a439" />
 <img width="30%" src="https://github.com/user-attachments/assets/c5c61c28-d863-44d7-b878-0a85bed04b7a" /> <img width="30%" src="https://github.com/user-attachments/assets/dcf290e5-e38b-433b-883a-9abb56c22c85" />
@@ -88,7 +86,6 @@
 
 - 설정한 비밀번호를 입력해야 여권 정보를 확인 할 수 있음
 
-</div>
 <br>
 
 ## 기술스택
